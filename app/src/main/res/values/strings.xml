@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">综合SDK</string>
+
+    <string-array name="am_gv">
+        <item>下拉刷新\n上拉加载</item>
+        <item>xUtils\n数据库</item>
+        <item>通用\n选择图片</item>
+        <item>朋友圈</item>
+        <item>自定义\n标签</item>
+        <item>选择本地文件</item>
+        <item>二级列表</item>
+        <item>StepView</item>
+    </string-array>
+    <string name="title_activity_xutils_dbdemo">XUtilsDBDemo</string>
+    <string name="menu_search">搜索</string>
+</resources>
