@@ -31,6 +31,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         setContentView(R.layout.activity_main);
         initView();
         loadData();
+
     }
 
     private void loadData() {
@@ -63,6 +64,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 break;
             case 2:
                 startActivity(new Intent(this,MultiImageSelect.class));
+                break;
+            case 4:
+                startActivity(new Intent(this,FlowWordWrapDemo.class));
                 break;
             case 5:
                 startActivity(new Intent(this,ChooseLocalFile.class));

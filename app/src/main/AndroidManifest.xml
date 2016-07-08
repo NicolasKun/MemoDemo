@@ -24,15 +24,17 @@
         </activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.RefreshDemo" />
         <activity
             android:name=".ui.XUtilsDBDemo"
             android:label="@string/title_activity_xutils_dbdemo"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.SearableActivty"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -49,7 +51,9 @@
             android:name="android.app.default_searchable"
             android:value=".ui.SearableActivty" />
 
-        <activity android:name=".ui.ChooseLocalFile" />
+        <activity
+            android:name=".ui.ChooseLocalFile"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.learnncode.mediachooser.activity.HomeScreenMediaChooser"
             android:screenOrientation="portrait"
@@ -57,9 +61,15 @@
         <activity android:name=".ui.SecondList" />
         <activity
             android:name=".ui.SelectLabel"
+            android:screenOrientation="portrait"
             android:theme="@style/dialogActivityStyle" />
-        <activity android:name=".ui.StepViewDemo" />
-        <activity android:name=".ui.MultiImageSelect"></activity>
+        <activity
+            android:name=".ui.StepViewDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MultiImageSelect"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.FlowWordWrapDemo"></activity>
     </application>
 
 </manifest>

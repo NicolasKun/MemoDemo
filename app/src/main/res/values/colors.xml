@@ -5,4 +5,11 @@
     <color name="colorAccent">#ff9940</color>
 
     <color name="colorGray">#DBDBDB</color>
+    
+    <color name="color_word_red">#f22c2c</color>
+    <color name="color_word_orange">#fa6c25</color>
+    <color name="color_word_yellow">#d1bf3a</color>
+    <color name="color_word_green">#59b53f</color>
+    <color name="color_word_bule">#53efef</color>
+    <color name="color_word_purple">#813ee7</color>
 </resources>

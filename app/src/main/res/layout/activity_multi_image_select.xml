@@ -47,18 +47,19 @@
         android:padding="7dp"
         android:visibility="gone"
         android:hint="请输入选择照片的数量,不超过9~"/>
-    <Button
+    <RadioButton
+        android:button="@null"
         android:onClick="misSeletImgs"
         android:id="@+id/mis_btn_select"
+        android:padding="9dp"
         android:textColor="@color/colorPrimary"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="选择图片"/>
     <cn.leeq.util.memodemo.util.NoScorllGridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="4"
+        android:numColumns="3"
         android:stretchMode="columnWidth"
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
