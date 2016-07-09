@@ -31,4 +31,23 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="popupWindow" parent="android:Animation" >
+        <item name="android:windowEnterAnimation">@anim/popup_start</item>
+        <item name="android:windowExitAnimation">@anim/popup_end</item>
+    </style>
+
+    <style name="dialogTheme" parent="@android:style/Animation.Activity">
+        <item name="android:activityCloseEnterAnimation" >@anim/anim_dialog_close_enter</item>
+        <item name="android:activityCloseExitAnimation" >@anim/anim_dialog_close_exit</item>
+        <item name="android:activityOpenEnterAnimation" >@anim/anim_dialog_open_enter</item>
+        <item name="android:activityOpenExitAnimation" >@anim/anim_dialog_open_exit</item>
+    </style>
+
+    <style name="dialogActivity" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowAnimationStyle">@style/dialogTheme</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+    </style>
+
 </resources>

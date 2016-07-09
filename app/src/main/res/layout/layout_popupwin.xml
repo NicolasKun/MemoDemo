@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:background="@drawable/shape_popwindow"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/btn_pinglun"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:drawableLeft="@mipmap/iconfont_pinglun1_2x"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:text="评论"/>
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginTop="7dp"
+        android:background="#000"
+        android:layout_marginBottom="7dp"/>
+    <Button
+        android:id="@+id/btn_zan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:textSize="16sp"
+        android:drawableLeft="@mipmap/iconfont_zan1_2x"
+        android:textColor="#fff"
+        android:text="点赞"/>
+</LinearLayout>

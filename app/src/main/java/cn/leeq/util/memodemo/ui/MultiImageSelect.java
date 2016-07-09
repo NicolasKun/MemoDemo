@@ -8,17 +8,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ import java.util.List;
 import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.adapter.GeneralAdapter;
 import cn.leeq.util.memodemo.adapter.ViewsHolder;
-import cn.leeq.util.memodemo.util.NoScorllGridView;
+import cn.leeq.util.memodemo.widget.NoScorllGridView;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 public class MultiImageSelect extends AppCompatActivity {

@@ -77,6 +77,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 7:
                 startActivity(new Intent(this,StepViewDemo.class));
                 break;
+            case 8:
+                startActivity(new Intent(this,PopupAnimDemo.class));
+                break;
         }
     }
 

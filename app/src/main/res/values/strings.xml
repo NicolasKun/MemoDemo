@@ -10,6 +10,7 @@
         <item>选择本地文件</item>
         <item>二级列表</item>
         <item>StepView</item>
+        <item>弹出动画</item>
     </string-array>
     <string name="title_activity_xutils_dbdemo">XUtilsDBDemo</string>
     <string name="menu_search">搜索</string>

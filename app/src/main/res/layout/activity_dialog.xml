@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.leeq.util.memodemo.ui.DialogActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这是一个\n演示Activity"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorPrimary"/>
+        <RadioButton
+            android:onClick="positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:padding="10dp"
+            android:button="@null"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:textColor="#515658"/>
+    </RelativeLayout>
+</RelativeLayout>

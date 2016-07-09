@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.config.Constants;
-import cn.leeq.util.memodemo.util.WordWrapView;
+import cn.leeq.util.memodemo.widget.WordWrapView;
 
 public class FlowWordWrapDemo extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package cn.leeq.util.memodemo.util;
+package cn.leeq.util.memodemo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

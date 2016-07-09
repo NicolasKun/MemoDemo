@@ -69,7 +69,15 @@
         <activity
             android:name=".ui.MultiImageSelect"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.FlowWordWrapDemo"></activity>
+        <activity
+            android:name=".ui.FlowWordWrapDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.PopupAnimDemo"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.DialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogActivity"/>
     </application>
 
 </manifest>
