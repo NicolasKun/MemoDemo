@@ -12,3 +12,7 @@
 · 二级列表
 
 · StepView步骤指示器
+
+· 使用multi-imges-select 选择本地图片  多少自己定
+
+· 加入弹出模块 包括PopupWindow(仿微信)和Activity的弹出动画
