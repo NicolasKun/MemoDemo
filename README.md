@@ -16,3 +16,5 @@
 · 使用multi-imges-select 选择本地图片  多少自己定
 
 · 加入弹出模块 包括PopupWindow(仿微信)和Activity的弹出动画
+
+· 添加使用节操视频框架播放视频
