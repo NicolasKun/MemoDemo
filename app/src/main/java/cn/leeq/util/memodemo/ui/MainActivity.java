@@ -80,6 +80,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 8:
                 startActivity(new Intent(this,PopupAnimDemo.class));
                 break;
+            case 9:
+                startActivity(new Intent(this,JCVideoPlayerDemo.class));
+                break;
         }
     }
 

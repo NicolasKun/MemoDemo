@@ -75,9 +75,11 @@
         <activity
             android:name=".ui.PopupAnimDemo"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.DialogActivity"
+        <activity
+            android:name=".ui.DialogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/dialogActivity"/>
+            android:theme="@style/dialogActivity" />
+        <activity android:name=".ui.JCVideoPlayerDemo"></activity>
     </application>
 
 </manifest>
