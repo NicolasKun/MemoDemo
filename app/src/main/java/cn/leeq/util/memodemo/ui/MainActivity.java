@@ -7,10 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.github.yoojia.zxing.qrcode.Decoder;
+import com.github.yoojia.zxing.qrcode.Encoder;
+import com.github.yoojia.zxing.qrcode.QRCodeSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         setContentView(R.layout.activity_main);
         initView();
         loadData();
-
     }
 
     private void loadData() {
@@ -82,6 +86,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 break;
             case 9:
                 startActivity(new Intent(this,JCVideoPlayerDemo.class));
+                break;
+            case 10:
+                startActivity(new Intent(this, QRDemo.class));
                 break;
         }
     }

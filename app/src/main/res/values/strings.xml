@@ -12,6 +12,7 @@
         <item>StepView</item>
         <item>弹出动画</item>
         <item>节操视频\n框架</item>
+        <item>ZXing\n二维码</item>
     </string-array>
     <string name="title_activity_xutils_dbdemo">XUtilsDBDemo</string>
     <string name="menu_search">搜索</string>

@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="cn.leeq.util.memodemo.ui.QRDemo">
 
-</RelativeLayout>
+    <RadioGroup
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/qr_rb_scan"
+            android:onClick="startQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:padding="8dp"
+            android:text="扫描" />
+        <RadioButton
+            android:onClick="startQR"
+            android:id="@+id/qr_rb_makeqr_bmp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="8dp"
+            android:text="生成" />
+    </RadioGroup>
+    <EditText
+        android:id="@+id/qr_et_content"
+        android:background="@null"
+        android:hint="输入将生成二维码的文本"
+        android:padding="7dp"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/qr_btn_positive"
+        android:onClick="startQR"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_genral_btn_stroke"
+        android:textColor="@color/colorPrimary"
+        android:text="确定"/>
+
+    <FrameLayout
+        android:layout_marginTop="65dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="500px"
+            android:layout_height="500px"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/qr_tv_result"/>
+        <ImageView
+            android:layout_width="500px"
+            android:layout_height="500px"
+            android:id="@+id/qr_iv_bmp"/>
+    </FrameLayout>
+</LinearLayout>
