@@ -69,6 +69,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 2:
                 startActivity(new Intent(this,MultiImageSelect.class));
                 break;
+            case 3:
+                Toast.makeText(MainActivity.this, "暂无", Toast.LENGTH_SHORT).show();
+                break;
             case 4:
                 startActivity(new Intent(this,FlowWordWrapDemo.class));
                 break;
@@ -92,6 +95,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 break;
             case 11:
                 startActivity(new Intent(this,NumDateFormatChinese.class));
+                break;
+            case 12:
+                startActivity(new Intent(this,JudgeDate.class));
                 break;
         }
     }

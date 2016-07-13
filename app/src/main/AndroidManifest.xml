@@ -90,7 +90,8 @@
             android:name=".ui.ScanQRCode"
             android:screenOrientation="portrait"
             android:theme="@style/scan" />
-        <activity android:name=".ui.NumDateFormatChinese"></activity>
+        <activity android:name=".ui.NumDateFormatChinese" />
+        <activity android:name=".ui.JudgeDate"></activity>
     </application>
 
 </manifest>
