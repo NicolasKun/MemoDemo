@@ -22,3 +22,9 @@
 · 添加ZXing使用案例 包括扫描和生成二维码
 
 · 添加数字日期转为汉字日期的功能
+
+· 添加判断日期为今天或者其他日期的模块
+
+主页: 
+
+![image]{https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-13-161241.png}
