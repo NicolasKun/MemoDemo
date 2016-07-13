@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="cn.leeq.util.memodemo.ui.NumDateFormatChinese">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ndfc_layout_et">
+                <EditText
+                    android:inputType="datetime"
+                    android:id="@+id/ndfc_et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:singleLine="true"
+                    android:hint="输入日期 格式:2016-08-21 13:44:21 798"/>
+            </android.support.design.widget.TextInputLayout>
+        </RelativeLayout>
+
+        <Button
+            android:onClick="startFormat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_genral_btn_stroke"
+            android:textColor="@color/color_word_green"
+            android:text="转 换"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/ndfc_tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/color_word_green"
+            android:textStyle="bold"
+            android:textSize="21sp"
+            android:text="日期"/>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

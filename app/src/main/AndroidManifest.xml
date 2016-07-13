@@ -80,13 +80,17 @@
             android:name=".ui.DialogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dialogActivity" />
-        <activity android:name=".ui.JCVideoPlayerDemo"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.QRDemo"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.ScanQRCode"
+        <activity
+            android:name=".ui.JCVideoPlayerDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.QRDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ScanQRCode"
             android:screenOrientation="portrait"
-            android:theme="@style/scan"/>
+            android:theme="@style/scan" />
+        <activity android:name=".ui.NumDateFormatChinese"></activity>
     </application>
 
 </manifest>

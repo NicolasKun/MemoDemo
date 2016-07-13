@@ -33,7 +33,6 @@ public class ScanQRCode extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void init() {
@@ -53,6 +52,12 @@ public class ScanQRCode extends AppCompatActivity {
         super.onPause();
         qrCodeSupport.onPause();
         handler.removeCallbacks(delayAutoTask);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     private Handler handler = new Handler();

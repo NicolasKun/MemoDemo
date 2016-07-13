@@ -90,6 +90,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 10:
                 startActivity(new Intent(this, QRDemo.class));
                 break;
+            case 11:
+                startActivity(new Intent(this,NumDateFormatChinese.class));
+                break;
         }
     }
 
