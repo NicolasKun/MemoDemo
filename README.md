@@ -27,4 +27,4 @@
 
 主页: 
 
-![image]{https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-13-161241.png}
+![image](https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-13-161241.png)
