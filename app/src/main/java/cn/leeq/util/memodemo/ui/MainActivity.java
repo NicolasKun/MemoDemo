@@ -70,7 +70,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 startActivity(new Intent(this,MultiImageSelect.class));
                 break;
             case 3:
-                Toast.makeText(MainActivity.this, "暂无", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "暂无", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,FriendCircleDemo.class));
                 break;
             case 4:
                 startActivity(new Intent(this,FlowWordWrapDemo.class));
