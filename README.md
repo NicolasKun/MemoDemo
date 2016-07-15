@@ -25,6 +25,8 @@
 
 · 添加判断日期为今天或者其他日期的模块
 
+· 添加了为View设置了点击生成波纹(API>=21)效果的demo(在朋友圈模块 (-__-)b)
+
 主页: 
 
 ![image](https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-13-161241.png)
