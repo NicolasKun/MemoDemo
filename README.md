@@ -27,6 +27,8 @@
 
 · 添加了为View设置了点击生成波纹(API>=21)效果的demo(在朋友圈模块 (-__-)b)
 
+· 更改按钮的状态,并判断在何状态下才可点击
+
 主页: 
 
 ![image](https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-19-093659.png)
