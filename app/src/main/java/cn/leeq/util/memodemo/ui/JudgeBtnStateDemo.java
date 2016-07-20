@@ -10,7 +10,11 @@ import cn.leeq.util.memodemo.R;
 
 /**
  * 点击按钮TextView改变状态
- * 这里改变的是pressed状态
+ * 这里改变的是selected状态
+ *
+ * 补充 - focus select区别
+ *  · focus 获取焦点  一个界面只能有一个focus状态
+ *  · select 一个界面可以有很多select状态
  */
 public class JudgeBtnStateDemo extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +25,7 @@ public class JudgeBtnStateDemo extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judge_btn_state_demo);
         init();
+
 
         tv1.setSelected(false);
         tv2.setSelected(false);
