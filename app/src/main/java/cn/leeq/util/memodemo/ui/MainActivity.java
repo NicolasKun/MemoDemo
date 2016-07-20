@@ -100,6 +100,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 12:
                 startActivity(new Intent(this,JudgeDate.class));
                 break;
+            case 13:
+                startActivity(new Intent(this,JudgeBtnStateDemo.class));
+                break;
         }
     }
 
