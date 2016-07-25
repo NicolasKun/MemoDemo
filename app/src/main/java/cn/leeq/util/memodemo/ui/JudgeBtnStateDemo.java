@@ -31,6 +31,7 @@ public class JudgeBtnStateDemo extends AppCompatActivity implements View.OnClick
         tv2.setSelected(false);
         tv3.setSelected(false);
         clickForTextView();
+
     }
 
     private void clickForTextView() {

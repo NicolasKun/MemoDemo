@@ -14,35 +14,47 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
+
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import cn.leeq.util.memodemo.MyApp;
 import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.adapter.GeneralAdapter;
 import cn.leeq.util.memodemo.adapter.ViewsHolder;
 import cn.leeq.util.memodemo.bean.JudgeBean;
+import cn.leeq.util.memodemo.bean.People;
 import cn.leeq.util.memodemo.config.Constants;
 import cn.leeq.util.memodemo.utils.DateUtils;
 
 public class JudgeDate extends AppCompatActivity implements View.OnClickListener {
 
     private ListView listView;
-    private List<JudgeBean.ListBean> data = new ArrayList<>();
+    private List<People> data = new ArrayList<>();
     private TextView tvAddData;
-    private GeneralAdapter<JudgeBean.ListBean> adapter;
+    private GeneralAdapter<People> adapter;
+    private DbManager db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judge_date);
+        db = x.getDb(MyApp.getInstance().getDaoconfig());
         tvAddData = (TextView) findViewById(R.id.jd_tv_add_data);
         listView = (ListView) findViewById(R.id.jd_listview);
-        adapter = new GeneralAdapter<JudgeBean.ListBean>(this, data, R.layout.item_judge_list) {
+        adapter = new GeneralAdapter<People>(this, data, R.layout.item_judge_list) {
             @Override
-            public void convert(ViewsHolder holder, JudgeBean.ListBean item, int position) {
+            public void convert(ViewsHolder holder, People item, int position) {
                 holder.setText(R.id.item_jl_tv_content, item.getContent());
                 holder.setText(R.id.item_jl_tv_name, item.getName());
                 try {
@@ -60,9 +72,22 @@ public class JudgeDate extends AppCompatActivity implements View.OnClickListener
     }
 
     private void loadData() {
-        Gson gson = new Gson();
-        JudgeBean judgeBean = gson.fromJson(Constants.DATA_FOR_JUDGE, JudgeBean.class);
-        data.addAll(judgeBean.getList());
+        data.clear();
+        Type type = new TypeToken<List<People>>() {
+        }.getType();
+        List<People> temp = new Gson().fromJson(Constants.DATA_FOR_JUDGE, type);
+        data.addAll(temp);
+
+        try {
+            List<People> all = db.findAll(People.class);
+            if (all != null) {
+                data.addAll(all);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        Log.e("test", "集合大小 " + data.size());
+        Collections.reverse(data);
     }
 
     @Override
@@ -97,12 +122,17 @@ public class JudgeDate extends AppCompatActivity implements View.OnClickListener
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss SSS");
         String format = dateFormat.format(new Date(System.currentTimeMillis()));
 
-        JudgeBean.ListBean bean = new JudgeBean.ListBean();
+        People bean = new People();
         bean.setName(getName);
         bean.setContent(getSign);
         bean.setDate(format);
 
-        data.add(bean);
-        adapter.notifyDataSetChanged();
+        try {
+            db.save(bean);
+            loadData();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
+
 }

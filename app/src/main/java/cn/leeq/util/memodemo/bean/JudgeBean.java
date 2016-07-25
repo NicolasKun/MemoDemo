@@ -8,6 +8,7 @@ import java.util.List;
  * Name : MemoDemo
  * Use :
  */
+
 public class JudgeBean {
 
     /**
