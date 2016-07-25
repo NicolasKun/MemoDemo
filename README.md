@@ -29,6 +29,6 @@
 
 · 更改按钮的状态,并判断在何状态下才可点击
 
-主页: 
 
-![image](https://github.com/NicolasKun/MemoDemo/blob/master/images/device-2016-07-19-093659.png)
+###主页: 
+<img width="300" height="500" src="images/device-2016-07-19-093659.png"></img>
