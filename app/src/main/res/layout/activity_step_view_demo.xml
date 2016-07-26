@@ -34,10 +34,29 @@
                 android:text="确定"
                 android:background="@null"/>
         </LinearLayout>
+
         <com.anton46.stepsview.StepsView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/svd_stepview"/>
+
+        <HorizontalScrollView
+            android:layout_marginTop="15dp"
+            android:scrollbars="none"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.baoyachi.stepview.HorizontalStepView
+                    android:id="@+id/svd_byc_horizontal_stepview"
+                    android:layout_width="420dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
     </LinearLayout>
 
 </RelativeLayout>

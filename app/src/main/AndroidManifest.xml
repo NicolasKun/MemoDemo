@@ -90,14 +90,19 @@
             android:name=".ui.ScanQRCode"
             android:screenOrientation="portrait"
             android:theme="@style/scan" />
-        <activity android:name=".ui.NumDateFormatChinese"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.JudgeDate"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.FriendCircleDemo"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.JudgeBtnStateDemo"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.NumDateFormatChinese"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.JudgeDate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.FriendCircleDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.JudgeBtnStateDemo"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.AutoLoadMore"></activity>
     </application>
 
 </manifest>

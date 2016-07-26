@@ -24,7 +24,7 @@ import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.adapter.GeneralAdapter;
 import cn.leeq.util.memodemo.adapter.ViewsHolder;
 
-public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private GridView gridView;
     private List<String> data = new ArrayList<>();
@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
         gridView.setOnItemClickListener(this);
+        gridView.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -118,5 +119,13 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i == 0) {
+            startActivity(new Intent(this,AutoLoadMore.class));
+        }
+        return true;
     }
 }
