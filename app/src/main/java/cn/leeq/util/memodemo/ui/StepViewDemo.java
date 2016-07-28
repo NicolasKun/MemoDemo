@@ -9,46 +9,55 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.anton46.stepsview.StepsView;
 import com.baoyachi.stepview.HorizontalStepView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.widget.StepsView;
+
 
 public class StepViewDemo extends AppCompatActivity {
 
-    private StepsView stepsView;
-    private String labels[] = {"s1","s2","s3","s4","s5","s6","s7"};
+    private String labels[] = {"提交订单","网点受理","快递员取件","快递员收件","网点揽收","网点发件","网点到件","快递员派件","快递员已派件","签收"};
     private EditText etStep;
     private HorizontalStepView hStepView;
     private List<String> list = new ArrayList<>();
+    private StepsView stepsView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_view_demo);
+        stepsView = (StepsView) findViewById(R.id.svd_step_view);
         etStep = (EditText) findViewById(R.id.svd_et_step);
-        stepsView = (StepsView) findViewById(R.id.svd_stepview);
         hStepView = (HorizontalStepView) findViewById(R.id.svd_byc_horizontal_stepview);
-        stepsView.setLabels(labels)
-                .setBarColorIndicator(Color.parseColor("#DBDBDB"))
-                .setProgressColorIndicator(Color.parseColor("#59b53f"))
-                .setCompletedPosition(0)
-                .drawView();
         loadHorizontalStepView();
+
+        /**
+         * 魔改
+         */
+        stepsView.setLabels(labels)
+                .setBarColorIndicator(Color.parseColor("#37474f"))
+                .setProgressColorIndicator(Color.parseColor("#59b53f"))
+                .setLabelColorIndicator(Color.parseColor("#59b53f"))
+                .drawView();
     }
 
     /**
      * 包牙齿的Stepview
      */
     private void loadHorizontalStepView() {
-        list.add("开始寄件");
-        list.add("快递员收件");
-        list.add("网点收件");
+        list.add("提交订单");
+        list.add("网点受理");
+        list.add("快递员取件");
+        list.add("快递员完成收件");
+        list.add("网点揽收");
         list.add("网点发件");
         list.add("网店到件");
         list.add("快递员派件");
+        list.add("快递员已派件");
         list.add("签收");
         hStepView.setStepsViewIndicatorComplectingPosition(2)
                 .setStepViewTexts(list)
@@ -74,7 +83,8 @@ public class StepViewDemo extends AppCompatActivity {
             if (step > labels.length-1) {
                 Toast.makeText(StepViewDemo.this, "太长了", Toast.LENGTH_SHORT).show();
             }else{
-                stepsView.setCompletedPosition(step).drawView();
+                stepsView.setCompletedPosition(step)
+                        .drawView();
                 etStep.setText("");
             }
         }else{
