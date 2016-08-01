@@ -36,7 +36,8 @@ public class StepViewDemo extends AppCompatActivity {
         loadHorizontalStepView();
 
         /**
-         * 魔改
+         * 魔改anton46的stepview
+         * 0.0
          */
         stepsView.setLabels(labels)
                 .setBarColorIndicator(Color.parseColor("#37474f"))

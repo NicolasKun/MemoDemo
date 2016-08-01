@@ -62,49 +62,55 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
-                startActivity(new Intent(this,RefreshDemo.class));
+                startToActivity(RefreshDemo.class);
                 break;
             case 1:
-                startActivity(new Intent(this,XUtilsDBDemo.class));
+                startToActivity(XUtilsDBDemo.class);
                 break;
             case 2:
-                startActivity(new Intent(this,MultiImageSelect.class));
+                startToActivity(XUtilsDBDemo.class);
                 break;
             case 3:
-                //Toast.makeText(MainActivity.this, "暂无", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,FriendCircleDemo.class));
+                startToActivity(FriendCircleDemo.class);
                 break;
             case 4:
-                startActivity(new Intent(this,FlowWordWrapDemo.class));
+                startToActivity(FlowWordWrapDemo.class);
                 break;
             case 5:
-                startActivity(new Intent(this,ChooseLocalFile.class));
+                startToActivity(ChooseLocalFile.class);
                 break;
             case 6:
-                startActivity(new Intent(this,SecondList.class));
+                startToActivity(SecondList.class);
                 break;
             case 7:
-                startActivity(new Intent(this,StepViewDemo.class));
+                startToActivity(StepViewDemo.class);
                 break;
             case 8:
-                startActivity(new Intent(this,PopupAnimDemo.class));
+                startToActivity(PopupAnimDemo.class);
                 break;
             case 9:
-                startActivity(new Intent(this,JCVideoPlayerDemo.class));
+                startToActivity(JCVideoPlayerDemo.class);
                 break;
             case 10:
-                startActivity(new Intent(this, QRDemo.class));
+                startToActivity(QRDemo.class);
                 break;
             case 11:
-                startActivity(new Intent(this,NumDateFormatChinese.class));
+                startToActivity(NumDateFormatChinese.class);
                 break;
             case 12:
-                startActivity(new Intent(this,JudgeDate.class));
+                startToActivity(JudgeDate.class);
                 break;
             case 13:
-                startActivity(new Intent(this,JudgeBtnStateDemo.class));
+                startToActivity(JudgeBtnStateDemo.class);
+                break;
+            case 14:
+                startToActivity(LocationInfoDemo.class);
                 break;
         }
+    }
+
+    private void startToActivity(Class<?> activity) {
+        startActivity(new Intent(this,activity));
     }
 
     @Override
