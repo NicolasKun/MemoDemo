@@ -29,6 +29,7 @@
 
 · 更改按钮的状态,并判断在何状态下才可点击
 
+· 加入高德地图 显示给定的周边定位信息
 
 ###主页: 
-<img width="300" height="500" src="images/device-2016-07-19-093659.png"></img>
+<img width="300" height="500" src="images/device-2016-08-01-135422.png"></img>
