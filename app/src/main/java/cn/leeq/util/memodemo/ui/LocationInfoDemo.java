@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
@@ -74,6 +75,7 @@ public class LocationInfoDemo extends AppCompatActivity implements AMap.OnInfoWi
                 aMap.addMarker(new MarkerOptions()
                         .anchor(0.5f, 0.5f)
                         .position(latLng)
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.image_emoticon25))
                         .title(bean.getMemname())
                         .draggable(true));
             }
