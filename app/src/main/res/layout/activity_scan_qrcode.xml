@@ -8,10 +8,8 @@
         android:id="@+id/sq_surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <com.github.yoojia.zxing.qrcode.FinderView
+    <zxing.view.ViewfinderView
         android:id="@+id/sq_finder_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@android:color/transparent"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

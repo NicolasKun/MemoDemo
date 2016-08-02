@@ -41,7 +41,6 @@ public class QRDemo extends AppCompatActivity {
 
         btnPositive.setClickable(false);
         etContent.setVisibility(View.GONE);
-        rbScan.setChecked(true);
         ivQr.setVisibility(View.GONE);
         tvResult.setVisibility(View.GONE);
     }
@@ -75,7 +74,8 @@ public class QRDemo extends AppCompatActivity {
                         etContent.setText("");
                     }
                 }else{
-                    startActivityForResult(new Intent(this,ScanQRCode.class),200);
+                    startActivityForResult(new Intent(this,MipcaActivityCapture.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),200);
                 }
                 break;
             case R.id.qr_rb_makeqr_bmp:
@@ -97,12 +97,11 @@ public class QRDemo extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 200) {
-            if (resultCode == 201) {
+            if (resultCode == RESULT_OK) {
                 ivQr.setVisibility(View.GONE);
                 tvResult.setVisibility(View.VISIBLE);
-                String scanResult = data.getStringExtra("scanResult");
-                tvResult.setText(scanResult);
-
+                String result = data.getStringExtra("result");
+                tvResult.setText(result);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

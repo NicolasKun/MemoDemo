@@ -113,8 +113,16 @@
         <activity
             android:name=".ui.JudgeBtnStateDemo"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.AutoLoadMore" />
-        <activity android:name=".ui.LocationInfoDemo"></activity>
+        <activity android:name=".ui.AutoLoadMore"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LocationInfoDemo"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.MipcaActivityCapture"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
     </application>
 
 </manifest>

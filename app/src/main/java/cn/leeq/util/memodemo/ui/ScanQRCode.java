@@ -5,9 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.github.yoojia.zxing.camera.CameraManager;
 import com.github.yoojia.zxing.qrcode.FinderView;
 import com.github.yoojia.zxing.qrcode.QRCodeSupport;
 
@@ -23,6 +22,7 @@ public class ScanQRCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qrcode);
+
         init();
 
         qrCodeSupport = new QRCodeSupport(surfaceView, new QRCodeSupport.OnResultListener() {
