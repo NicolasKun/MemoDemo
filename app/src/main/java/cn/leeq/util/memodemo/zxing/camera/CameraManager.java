@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.camera;
+package cn.leeq.util.memodemo.zxing.camera;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -131,7 +131,7 @@ public final class CameraManager {
 
       //FIXME
  //     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
+      //�Ƿ�ʹ��ǰ��
 //      if (prefs.getBoolean(PreferencesActivity.KEY_FRONT_LIGHT, false)) {
 //        FlashlightManager.enableFlashlight();
 //      }

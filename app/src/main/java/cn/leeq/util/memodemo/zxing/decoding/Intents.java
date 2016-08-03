@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.decoding;
+package cn.leeq.util.memodemo.zxing.decoding;
 
 /**
  * This class provides the constants to use when sending an Intent to Barcode Scanner.

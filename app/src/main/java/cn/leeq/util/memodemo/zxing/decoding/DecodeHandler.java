@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.decoding;
+package cn.leeq.util.memodemo.zxing.decoding;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,21 +29,23 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 
+
 import java.util.Hashtable;
 
 import cn.leeq.util.memodemo.R;
-import cn.leeq.util.memodemo.ui.MipcaActivityCapture;
-import zxing.camera.CameraManager;
-import zxing.camera.PlanarYUVLuminanceSource;
+import cn.leeq.util.memodemo.ui.CaptureActivity;
+import cn.leeq.util.memodemo.zxing.camera.CameraManager;
+import cn.leeq.util.memodemo.zxing.camera.PlanarYUVLuminanceSource;
+
 
 final class DecodeHandler extends Handler {
 
   private static final String TAG = DecodeHandler.class.getSimpleName();
 
-  private final MipcaActivityCapture activity;
+  private final CaptureActivity activity;
   private final MultiFormatReader multiFormatReader;
 
-  DecodeHandler(MipcaActivityCapture activity, Hashtable<DecodeHintType, Object> hints) {
+  DecodeHandler(CaptureActivity activity, Hashtable<DecodeHintType, Object> hints) {
     multiFormatReader = new MultiFormatReader();
     multiFormatReader.setHints(hints);
     this.activity = activity;
@@ -51,15 +53,12 @@ final class DecodeHandler extends Handler {
 
   @Override
   public void handleMessage(Message message) {
-    switch (message.what) {
-      case R.id.decode:
-        //Log.d(TAG, "Got decode message");
-        decode((byte[]) message.obj, message.arg1, message.arg2);
-        break;
-      case R.id.quit:
-        Looper.myLooper().quit();
-        break;
-    }
+	  if(message.what== R.id.decode){
+		  //Log.d(TAG, "Got decode message");
+		  decode((byte[]) message.obj, message.arg1, message.arg2);
+	  }else if(message.what== R.id.quit){
+		  Looper.myLooper().quit();
+	  }
   }
 
   /**

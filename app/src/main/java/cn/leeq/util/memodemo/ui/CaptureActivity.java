@@ -3,7 +3,6 @@ package cn.leeq.util.memodemo.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -19,22 +18,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Result;
+
 
 import java.io.IOException;
 import java.util.Vector;
 
 import cn.leeq.util.memodemo.R;
-import zxing.camera.CameraManager;
-import zxing.decoding.CaptureActivityHandler;
-import zxing.decoding.InactivityTimer;
-import zxing.view.ViewfinderView;
+import cn.leeq.util.memodemo.zxing.camera.CameraManager;
+import cn.leeq.util.memodemo.zxing.decoding.CaptureActivityHandler;
+import cn.leeq.util.memodemo.zxing.decoding.InactivityTimer;
+import cn.leeq.util.memodemo.zxing.view.ViewfinderView;
+
 
 /**
- * Initial the camera
- * @author Ryan.Tang
+ * 开启相机扫描二维码页面
+ * @author
  */
-public class MipcaActivityCapture extends Activity implements Callback {
+public class CaptureActivity extends Activity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView viewfinderView;
@@ -45,16 +45,18 @@ public class MipcaActivityCapture extends Activity implements Callback {
 	private MediaPlayer mediaPlayer;
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
+	private boolean vibrate;
+	private Button cancelScanButton;
 
-	/** Called when the activity is first created. */
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_scan_qrcode);
-		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
+		setContentView(R.layout.camera);
 		CameraManager.init(getApplication());
-		viewfinderView = (ViewfinderView) findViewById(R.id.sq_finder_view);
-
+		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+		//取消
+		cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 	}
@@ -62,7 +64,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.sq_surface_view);
+		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {
 			initCamera(surfaceHolder);
@@ -79,6 +81,16 @@ public class MipcaActivityCapture extends Activity implements Callback {
 			playBeep = false;
 		}
 		initBeepSound();
+		vibrate = true;
+		
+		//退出扫描试图
+		cancelScanButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CaptureActivity.this.finish();
+			}
+		});
 	}
 
 	@Override
@@ -96,18 +108,21 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		inactivityTimer.shutdown();
 		super.onDestroy();
 	}
-
+	
+	/**
+	 * 处理扫描结果
+	 */
 	public void handleDecode(String result) {
 		inactivityTimer.onActivity();
-
+		playBeepSoundAndVibrate();
 		if (result.equals("")) {
-			Toast.makeText(MipcaActivityCapture.this, "Scan failed!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(CaptureActivity.this, "空数据!", Toast.LENGTH_SHORT).show();
 		}else {
 			Intent resultIntent = new Intent()
 					.putExtra("result", result);
-			this.setResult(RESULT_OK, resultIntent);
+			setResult(RESULT_OK, resultIntent);
 		}
-		MipcaActivityCapture.this.finish();
+		finish();
 	}
 	
 	private void initCamera(SurfaceHolder surfaceHolder) {
@@ -160,9 +175,6 @@ public class MipcaActivityCapture extends Activity implements Callback {
 
 	private void initBeepSound() {
 		if (playBeep && mediaPlayer == null) {
-			// The volume on STREAM_SYSTEM is not adjustable, and users found it
-			// too loud,
-			// so we now play on the music stream.
 			setVolumeControlStream(AudioManager.STREAM_MUSIC);
 			mediaPlayer = new MediaPlayer();
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -179,6 +191,18 @@ public class MipcaActivityCapture extends Activity implements Callback {
 			} catch (IOException e) {
 				mediaPlayer = null;
 			}
+		}
+	}
+
+	private static final long VIBRATE_DURATION = 200L;
+
+	private void playBeepSoundAndVibrate() {
+		if (playBeep && mediaPlayer != null) {
+			mediaPlayer.start();
+		}
+		if (vibrate) {
+			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+			vibrator.vibrate(VIBRATE_DURATION);
 		}
 	}
 

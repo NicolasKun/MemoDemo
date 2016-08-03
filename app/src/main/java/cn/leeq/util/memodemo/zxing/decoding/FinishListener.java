@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.decoding;
+package cn.leeq.util.memodemo.zxing.decoding;
 
 import android.app.Activity;
 import android.content.DialogInterface;

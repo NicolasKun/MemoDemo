@@ -1,27 +1,21 @@
 package cn.leeq.util.memodemo.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.yoojia.zxing.qrcode.Encoder;
+import com.google.zxing.WriterException;
 
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.zxing.encoding.EncodingHandler;
 
 public class QRDemo extends AppCompatActivity {
 
@@ -29,7 +23,6 @@ public class QRDemo extends AppCompatActivity {
     private Button btnPositive;
     private RadioButton rbBmp;
     private ImageView ivQr;
-    private Encoder encoderBuild;
     private RadioButton rbScan;
     private TextView tvResult;
 
@@ -52,13 +45,7 @@ public class QRDemo extends AppCompatActivity {
         ivQr = (ImageView) findViewById(R.id.qr_iv_bmp);
         rbScan = (RadioButton) findViewById(R.id.qr_rb_scan);
         tvResult = (TextView) findViewById(R.id.qr_tv_result);
-        encoderBuild = new Encoder.Builder()
-                .setBackgroundColor(Color.WHITE)
-                .setCodeColor(Color.BLACK)
-                .setOutputBitmapHeight(500)
-                .setOutputBitmapWidth(500)
-                .setOutputBitmapPadding(1)
-                .build();
+
     }
 
     public void startQR(View view) {
@@ -74,7 +61,7 @@ public class QRDemo extends AppCompatActivity {
                         etContent.setText("");
                     }
                 }else{
-                    startActivityForResult(new Intent(this,MipcaActivityCapture.class)
+                    startActivityForResult(new Intent(this,CaptureActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),200);
                 }
                 break;
@@ -90,8 +77,12 @@ public class QRDemo extends AppCompatActivity {
     }
 
     private void createQRcodeImg(String getContent) {
-        Bitmap encode = encoderBuild.encode(getContent);
-        ivQr.setImageBitmap(encode);
+        try {
+            Bitmap encode = EncodingHandler.createQRCode(getContent, 400);
+            ivQr.setImageBitmap(encode);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

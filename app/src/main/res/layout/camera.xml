@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <cn.leeq.util.memodemo.zxing.view.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+        <RelativeLayout
+            android:id="@+id/sq_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_daohang">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"
+                android:textSize="19sp"
+                android:text="扫描中"/>
+        </RelativeLayout>
+
+        <!--最下面的取消按钮-->
+        <Button
+            android:id="@+id/btn_cancel_scan"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="75dp"
+            android:text="取  消"
+            android:textColor="#DBDBDB"
+            android:background="@drawable/shape_btn_negative"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        
+    </RelativeLayout>
+
+</FrameLayout>

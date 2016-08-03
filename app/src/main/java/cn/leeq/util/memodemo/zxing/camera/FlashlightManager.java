@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.camera;
+package cn.leeq.util.memodemo.zxing.camera;
 
 import android.os.IBinder;
 import android.util.Log;
@@ -54,7 +54,7 @@ final class FlashlightManager {
   }
 
   /**
-   * 控制相机闪光灯开关
+   * �����������ƿ���
    */
   //FIXME
   static void enableFlashlight() {

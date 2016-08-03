@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.view;
+package cn.leeq.util.memodemo.zxing.view;
 
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;

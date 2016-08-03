@@ -13,7 +13,12 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <!--允许访问振动设备-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--控制摄像头-->
+    <uses-feature android:name="android.hardware.camera" />
+    <!--相机自动聚焦-->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -98,10 +103,6 @@
             android:name=".ui.QRDemo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ScanQRCode"
-            android:screenOrientation="portrait"
-            android:theme="@style/scan" />
-        <activity
             android:name=".ui.NumDateFormatChinese"
             android:screenOrientation="portrait" />
         <activity
@@ -118,11 +119,8 @@
         <activity android:name=".ui.LocationInfoDemo"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.MipcaActivityCapture"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
+            android:name=".ui.CaptureActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

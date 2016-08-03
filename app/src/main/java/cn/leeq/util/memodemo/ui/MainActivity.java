@@ -3,19 +3,12 @@ package cn.leeq.util.memodemo.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
-
-import com.github.yoojia.zxing.qrcode.Decoder;
-import com.github.yoojia.zxing.qrcode.Encoder;
-import com.github.yoojia.zxing.qrcode.QRCodeSupport;
 
 import java.util.ArrayList;
 import java.util.List;

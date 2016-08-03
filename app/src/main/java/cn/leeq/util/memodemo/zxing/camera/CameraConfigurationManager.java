@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.camera;
+package cn.leeq.util.memodemo.zxing.camera;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 final class CameraConfigurationManager {
@@ -76,10 +75,7 @@ final class CameraConfigurationManager {
     setZoom(parameters);
     //setSharpness(parameters);
     //modify here
-    
-//    camera.setDisplayOrientation(90);
-    //����2.1
-    setDisplayOrientation(camera, 90);
+    camera.setDisplayOrientation(90);
     camera.setParameters(parameters);
   }
 
@@ -266,23 +262,5 @@ final class CameraConfigurationManager {
 	public static int getDesiredSharpness() {
 		return DESIRED_SHARPNESS;
 	}
-	
-	/**
-	 * compatible  1.6
-	 * @param camera
-	 * @param angle
-	 */
-	protected void setDisplayOrientation(Camera camera, int angle){
-        Method downPolymorphic;
-        try  
-        {  
-            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });
-            if (downPolymorphic != null)  
-                downPolymorphic.invoke(camera, new Object[] { angle });
-        }  
-        catch (Exception e1)
-        {  
-        }  
-   }  
 
 }

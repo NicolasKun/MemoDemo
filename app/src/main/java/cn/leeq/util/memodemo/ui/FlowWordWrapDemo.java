@@ -29,7 +29,5 @@ public class FlowWordWrapDemo extends AppCompatActivity {
                 wrapView.addView(tv);
             }
         }
-
-
     }
 }

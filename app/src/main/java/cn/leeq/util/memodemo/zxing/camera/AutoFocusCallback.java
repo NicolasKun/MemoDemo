@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package zxing.camera;
+package cn.leeq.util.memodemo.zxing.camera;
 
 import android.hardware.Camera;
 import android.os.Handler;
