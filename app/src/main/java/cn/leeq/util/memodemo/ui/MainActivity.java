@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 startToActivity(XUtilsDBDemo.class);
                 break;
             case 2:
-                startToActivity(XUtilsDBDemo.class);
+                startToActivity(MultiImageSelect.class);
                 break;
             case 3:
                 startToActivity(FriendCircleDemo.class);
