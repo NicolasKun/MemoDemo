@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +22,13 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
 
     private StepsViewIndicator mStepsViewIndicator;
     private FrameLayout mLabelsLayout;
-    private String[] mLabels;
+    private List<String> mLabels;
+    private List<String> mLabelsDate;
     private int mProgressColorIndicator = Color.YELLOW;
     private int mLabelColorIndicator = Color.BLACK;
     private int mBarColorIndicator = Color.BLACK;
     private int mCompletedPosition = 0;
+    private FrameLayout mDateLayout;
 
     public StepsView(Context context) {
         this(context, null);
@@ -45,20 +49,19 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
         mStepsViewIndicator = (StepsViewIndicator) rootView.findViewById(R.id.steps_indicator_view);
         mStepsViewIndicator.setDrawListener(this);
         mLabelsLayout = (FrameLayout) rootView.findViewById(R.id.labels_container);
+        mDateLayout = (FrameLayout) rootView.findViewById(R.id.labels_date_container);
     }
 
-    public String[] getLabels() {
-        return mLabels;
-    }
 
-    public StepsView setLabels(String[] labels) {
+    public StepsView setLabels(List<String> labels) {
         mLabels = labels;
-        mStepsViewIndicator.setStepSize(labels.length);
+        mStepsViewIndicator.setStepSize(labels.size());
         return this;
     }
 
-    public int getProgressColorIndicator() {
-        return mProgressColorIndicator;
+    public StepsView setLabelsDate(List<String> labelsDate) {
+        mLabelsDate = labelsDate;
+        return this;
     }
 
     public StepsView setProgressColorIndicator(int progressColorIndicator) {
@@ -67,18 +70,12 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
         return this;
     }
 
-    public int getLabelColorIndicator() {
-        return mLabelColorIndicator;
-    }
 
     public StepsView setLabelColorIndicator(int labelColorIndicator) {
         mLabelColorIndicator = labelColorIndicator;
         return this;
     }
 
-    public int getBarColorIndicator() {
-        return mBarColorIndicator;
-    }
 
     public StepsView setBarColorIndicator(int barColorIndicator) {
         mBarColorIndicator = barColorIndicator;
@@ -97,12 +94,12 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
     }
 
     public void drawView() {
-        if (mLabels == null) {
+        if (mLabels == null || mLabelsDate == null) {
             throw new IllegalArgumentException("labels must not be null.");
         }
 
-        if (mCompletedPosition < 0 || mCompletedPosition > mLabels.length - 1) {
-            throw new IndexOutOfBoundsException(String.format("Index : %s, Size : %s", mCompletedPosition, mLabels.length));
+        if (mCompletedPosition < 0 || mCompletedPosition > mLabels.size() - 1) {
+            throw new IndexOutOfBoundsException(String.format("Labels Index : %s, Size : %s", mCompletedPosition, mLabels.size()));
         }
 
         mStepsViewIndicator.invalidate();
@@ -115,13 +112,13 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
 
     private void drawLabels() {
         List<Float> indicatorPosition = mStepsViewIndicator.getThumbContainerXPosition();
-
         if (mLabels != null) {
-            for (int i = 0; i < mLabels.length; i++) {
+            for (int i = 0; i < mLabels.size(); i++) {
+                //标准指示
                 TextView textView = new TextView(getContext());
-                textView.setText(mLabels[i]);
+                textView.setText(mLabels.get(i));
                 textView.setTextSize(8);
-
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
                 textView.setX(indicatorPosition.get(i)+3);
                 textView.setLayoutParams(
                         new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -135,6 +132,21 @@ public class StepsView extends LinearLayout implements StepsViewIndicator.OnDraw
                 }*/
                 textView.setTextColor(Color.parseColor("#DBDBDB"));
                 mLabelsLayout.addView(textView);
+            }
+        }
+        if (mLabelsDate != null) {
+            for (int i = 0; i < mLabelsDate.size(); i++) {
+                //日期
+                TextView tv = new TextView(getContext());
+                tv.setText(mLabelsDate.get(i));
+                tv.setTextSize(8);
+                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                tv.setX(indicatorPosition.get(i)+3);
+                tv.setLayoutParams(
+                        new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT));
+                tv.setTextColor(Color.parseColor("#DBDBDB"));
+                mDateLayout.addView(tv);
             }
         }
     }

@@ -60,7 +60,7 @@ public class StepsViewIndicator extends View {
         mLineHeight = 0.1f * THUMB_SIZE;
         mThumbRadius = 0.3f * THUMB_SIZE;
         mCircleRadius = 0.5f * mThumbRadius;
-        mPadding = 0.5f * THUMB_SIZE;
+        mPadding = 0.7f * THUMB_SIZE;
     }
 
     public void setStepSize(int size) {
@@ -101,7 +101,7 @@ public class StepsViewIndicator extends View {
         if (MeasureSpec.UNSPECIFIED != MeasureSpec.getMode(widthMeasureSpec)) {
             width = MeasureSpec.getSize(widthMeasureSpec);
         }
-        int height = THUMB_SIZE + 20;
+        int height = 60 ;
         if (MeasureSpec.UNSPECIFIED != MeasureSpec.getMode(heightMeasureSpec)) {
             height = Math.min(height, MeasureSpec.getSize(heightMeasureSpec));
         }

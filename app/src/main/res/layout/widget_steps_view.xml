@@ -17,4 +17,8 @@
         android:id="@+id/labels_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:id="@+id/labels_date_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
