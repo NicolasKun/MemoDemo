@@ -99,6 +99,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 14:
                 startToActivity(LocationInfoDemo.class);
                 break;
+            case 15:
+                startToActivity(RetrofitDemo.class);
+                break;
+            case 16:
+                startToActivity(BlueToothDemo.class);
+                break;
         }
     }
 
