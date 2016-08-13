@@ -131,7 +131,12 @@
         <activity
             android:name=".ui.RetrofitDemo"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.BlueToothDemo"></activity>
+        <activity android:name=".ui.BlueToothDemo" />
+        <activity
+            android:name=".ui.SelectDevice"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

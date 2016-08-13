@@ -15,25 +15,39 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <RadioButton
-            android:id="@+id/bt_rb_open_blue_tooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:button="@null"
-            android:onClick="blueTooth"
-            android:text="打开蓝牙"/>
-        <RadioButton
             android:id="@+id/bt_rb_search_blue_tooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="7dp"
             android:button="@null"
             android:onClick="blueTooth"
-            android:text="搜索蓝牙"/>
+            android:text="搜索设备"/>
     </LinearLayout>
     <TextView
         android:id="@+id/bt_tv_device_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="设备"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/bt_rb_print_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:button="@null"
+            android:onClick="blueTooth"
+            android:text="打印文字"/>
+        <RadioButton
+            android:id="@+id/bt_rb_print_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:button="@null"
+            android:onClick="blueTooth"
+            android:text="打印小票"/>
+    </LinearLayout>
 </LinearLayout>

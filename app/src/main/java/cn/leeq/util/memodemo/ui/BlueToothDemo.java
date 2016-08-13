@@ -7,13 +7,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Parcelable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.zj.btsdk.BluetoothService;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -22,39 +26,37 @@ import java.util.UUID;
 import cn.leeq.util.memodemo.R;
 
 public class BlueToothDemo extends AppCompatActivity {
-
     private BluetoothAdapter adapter;
+    BluetoothDevice device = null;
+    BluetoothService mService = null;
     private TextView tvDeviceName;
-    private RadioButton rbOpen;
     private RadioButton rbSearch;
+    private RadioButton rbPrintText;
+    private RadioButton rbPrintTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue_tooth_demo);
         init();
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
-        intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        intentFilter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(blueToothBroadCastReceiver, intentFilter);
     }
 
     private void init() {
-        rbOpen = (RadioButton) findViewById(R.id.bt_rb_open_blue_tooth);
         rbSearch = (RadioButton) findViewById(R.id.bt_rb_search_blue_tooth);
         tvDeviceName = (TextView) findViewById(R.id.bt_tv_device_name);
         adapter = BluetoothAdapter.getDefaultAdapter();
-
-
+        rbPrintText = (RadioButton) findViewById(R.id.bt_rb_print_text);
+        rbPrintTicket = (RadioButton) findViewById(R.id.bt_rb_print_ticket);
+        mService = new BluetoothService(this, handler);
+        if (!mService.isAvailable()) {  //蓝牙不可用
+            Toast.makeText(BlueToothDemo.this, "蓝牙不可用", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        rbPrintText.setEnabled(false);
+        rbPrintTicket.setEnabled(false);
     }
 
     private void openBlueTooth() {
-        if (adapter == null) {
-            Toast.makeText(BlueToothDemo.this, "该设备不支持蓝牙", Toast.LENGTH_SHORT).show();
-        }
         //打开蓝牙
         if (!adapter.isEnabled()) {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -65,76 +67,95 @@ public class BlueToothDemo extends AppCompatActivity {
 
     public void blueTooth(View view) {
         switch (view.getId()) {
-            case R.id.bt_rb_open_blue_tooth:
-                openBlueTooth();
-                break;
             case R.id.bt_rb_search_blue_tooth:
-                if (adapter.isEnabled()) {
-                    adapter.startDiscovery();
+                if (adapter == null) {
+                    Toast.makeText(BlueToothDemo.this, "该设备不支持蓝牙", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(BlueToothDemo.this, "蓝牙尚未开启", Toast.LENGTH_SHORT).show();
-                    openBlueTooth();
+                    if (adapter.isEnabled()) {
+                        startActivityForResult(new Intent(this, SelectDevice.class), 100);
+                    } else {
+                        Toast.makeText(BlueToothDemo.this, "蓝牙尚未开启", Toast.LENGTH_SHORT).show();
+                        openBlueTooth();
+                    }
                 }
+                break;
+            case R.id.bt_rb_print_text:
+                String text = "诛仙手游8月10日11时公测\n\n";
+                if (text.length() > 0) {
+                    mService.sendMessage(text, "GBK");
+                }
+                break;
+            case R.id.bt_rb_print_ticket:
+                printTicket();
                 break;
         }
     }
 
-    BroadcastReceiver blueToothBroadCastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
+    /**
+     * 打印小票
+     */
+    private void printTicket() {
+        byte[] cmd = new byte[3];
+        cmd[0] = 0x1b;
+        cmd[1] = 0x21;
 
-            switch (action) {
-                case BluetoothDevice.ACTION_FOUND:
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    String address = device.getAddress();
-                    String name = device.getName();
-                    tvDeviceName.setText("蓝牙:" + "\n设备名 : " + name + "\n设备地址 : " + address);
-                    //如果查找到的设备符合要连接的设备,处理
-                    if (name.equals("红米手机")) {
-                        //及时关闭
-                        adapter.cancelDiscovery();
-                        //获取连接状态
-                        int bondState = device.getBondState();
-                        switch (bondState) {
-                            //未配对
-                            case BluetoothDevice.BOND_NONE:
-                                //配对
-                                try {
-                                    Method createBond = BluetoothDevice.class.getMethod("createBond");
-                                    createBond.invoke(device);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            //已配对
-                            case BluetoothDevice.BOND_BONDED:
-                                try {
-                                    connect(device);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                        }
+        cmd[2] |= 0x10;   //倍高 倍宽模式
+        mService.write(cmd);
+        mService.sendMessage("快递宝\n","GBK");
+
+        cmd[2] &= 0xEF;
+        mService.write(cmd);
+        String msg = "运单号 :" + 8100012 +
+                "\n收件人 : " + "老唐" +
+                "\n收件人电话 : " + "18163215156" +
+                "\n收件地址 : " + "北京市丰台区天瑞大厦401\n" +
+                "\n网点 : " + "北京市丰台区纪家庙申通快递KKK部\n\n";
+        mService.sendMessage(msg, "GBK");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100) {
+            if (resultCode == 101) {
+                String addr = data.getStringExtra(SelectDevice.EXTRA_DEVICE_ADDRESS);
+                Log.e("test", "回调地址 " + addr);
+                tvDeviceName.setText(addr);
+                device = mService.getDevByMac(addr);
+
+                mService.connect(device);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case BluetoothService.MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1) {
+                        case BluetoothService.STATE_CONNECTED:
+                            Toast.makeText(BlueToothDemo.this, "连接成功", Toast.LENGTH_SHORT).show();
+                            rbPrintText.setEnabled(true);
+                            rbPrintTicket.setEnabled(true);
+                            break;
+                        case BluetoothService.STATE_CONNECTING:
+                            Log.e("test", "蓝牙正在连接.... " + msg.what);
+                            break;
+                        case BluetoothService.STATE_LISTEN:
+                        case BluetoothService.STATE_NONE:
+                            Log.e("test", "蓝牙正在连接.... " + msg.what);
+                            break;
                     }
                     break;
-                case BluetoothDevice.ACTION_BOND_STATE_CHANGED:
-                    BluetoothDevice device1 = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    if (device1.getName().equalsIgnoreCase("红米手机")) {
-                        int bondState = device1.getBondState();
-                        switch (bondState) {
-                            case BluetoothDevice.BOND_NONE:
-                            case BluetoothDevice.BOND_BONDING:
-                                break;
-                            case BluetoothDevice.BOND_BONDED:
-                                try {
-                                    connect(device1);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                        }
-                    }
+                case BluetoothService.MESSAGE_CONNECTION_LOST:
+                    Toast.makeText(BlueToothDemo.this, "设备连接中断", Toast.LENGTH_SHORT).show();
+                    rbPrintText.setEnabled(false);
+                    rbPrintTicket.setEnabled(false);
+                    break;
+                case BluetoothService.MESSAGE_UNABLE_CONNECT:
+                    Toast.makeText(BlueToothDemo.this, "无法连接到设备", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -143,16 +164,9 @@ public class BlueToothDemo extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(blueToothBroadCastReceiver);
-    }
-
-    /**
-     * 连接蓝牙设备
-     */
-    private void connect(BluetoothDevice device) throws IOException {
-        String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
-        UUID uuid = UUID.fromString(SPP_UUID);
-        BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid);
-        socket.connect();
+        if (mService != null) {
+            mService.stop();
+        }
+        mService = null;
     }
 }
