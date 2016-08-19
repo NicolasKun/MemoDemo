@@ -60,7 +60,7 @@ public class StepsViewIndicator extends View {
         mLineHeight = 0.1f * THUMB_SIZE;
         mThumbRadius = 0.3f * THUMB_SIZE;
         mCircleRadius = 0.5f * mThumbRadius;
-        mPadding = 0.7f * THUMB_SIZE;
+        mPadding = 0.3f * THUMB_SIZE;
     }
 
     public void setStepSize(int size) {

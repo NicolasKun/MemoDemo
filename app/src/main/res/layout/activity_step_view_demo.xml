@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content">
                 <cn.leeq.util.memodemo.widget.StepsView
                     android:id="@+id/svd_step_view"
-                    android:layout_width="600dp"
+                    android:layout_width="800dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </HorizontalScrollView>
