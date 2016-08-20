@@ -8,15 +8,36 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cn.leeq.util.memodemo.ui.SecondList">
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary"
-        android:text="选择标签"
-        android:clickable="true"
-        android:layout_centerInParent="true"
-        android:id="@+id/sl_select_label"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:text="选择标签"
+            android:clickable="true"
+            android:id="@+id/sl_select_label"/>
+        <RadioButton
+            android:id="@+id/sl_rb_select_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择城市"
+            android:padding="7dp"
+            android:button="@null"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:id="@+id/sl_tv_select_city"/>
+    </LinearLayout>
+
 </RelativeLayout>
