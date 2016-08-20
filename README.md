@@ -33,4 +33,4 @@
 
 · 加入蓝牙模块 可以搜索附近蓝牙设备进行配对   还可以连接蓝牙打印机进行打印
 ###主页: 
-<img width="300" height="500" src="images/device-2016-08-01-135422.png"></img>
+<img width="300" height="500" src="images/device-2016-08-20-104842.png"></img>
