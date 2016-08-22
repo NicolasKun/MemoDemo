@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 
 import cn.leeq.util.memodemo.R;

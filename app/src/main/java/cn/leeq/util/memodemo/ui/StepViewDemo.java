@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.baoyachi.stepview.HorizontalStepView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,7 +29,6 @@ import retrofit2.Retrofit;
 public class StepViewDemo extends AppCompatActivity {
 
     private EditText etStep;
-    private HorizontalStepView hStepView;
     private List<String> list = new ArrayList<>();
     private List<String> labelsDate = new ArrayList<>();
     private StepsView stepsView;
@@ -41,10 +39,7 @@ public class StepViewDemo extends AppCompatActivity {
         setContentView(R.layout.activity_step_view_demo);
         stepsView = (StepsView) findViewById(R.id.svd_step_view);
         etStep = (EditText) findViewById(R.id.svd_et_step);
-        hStepView = (HorizontalStepView) findViewById(R.id.svd_byc_horizontal_stepview);
         loadData();
-
-        loadHorizontalStepView();
 
         /**
          * 魔改anton46的stepview
@@ -70,44 +65,8 @@ public class StepViewDemo extends AppCompatActivity {
         list.add("快递员派件");
         list.add("快递员已派件");
         list.add("签收");
-
-        Type type = new TypeToken<List<Status>>() {
-        }.getType();
-        List<Status> temp = new Gson().fromJson(Constants.DATE_LABELS, type);
-        for (Status status : temp) {
-            int id = status.getId();
-            String create_date = status.getCreate_date();
-            String date_day = create_date.substring(0, create_date.indexOf(" "));
-            String date_min = create_date.substring(create_date.indexOf(" ") + 1, create_date.indexOf("."));
-            Log.e("test", "截取日期 " + date_day + "\n截取分钟 " + date_min);
-            labelsDate.add(date_min + "\n" + date_day);
-        }
-
-
     }
 
-
-    /**
-     * 包牙齿的Stepview
-     */
-    private void loadHorizontalStepView() {
-
-        hStepView.setStepsViewIndicatorComplectingPosition(2)
-                .setStepViewTexts(list)
-                .setTextSize(10)
-                //完成线的颜色
-                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                //未完成线的颜色
-                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(this, R.color.colorGray))
-                //完成后文字的颜色
-                .setStepViewComplectedTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                //未完成文字的颜色
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, R.color.colorGray))
-                //完成后指示器的样式
-                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.shape_svd_circle_green))
-                //指示器默认的样式
-                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.shape_svd_circle_nor));
-    }
 
     public void positive(View view) {
         if (!TextUtils.isEmpty(etStep.getText())) {

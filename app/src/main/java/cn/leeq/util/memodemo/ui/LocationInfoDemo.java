@@ -7,9 +7,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -66,6 +68,7 @@ public class LocationInfoDemo extends AppCompatActivity implements AMap.OnInfoWi
      * 添加marker
      */
     private void addMarkersToMap() {
+        LatLngBounds bounds = null;
         Log.e("test", "位置集合 " + data.size());
         if (data != null) {
             for (final NearbyLocation.ListBean bean : data) {
@@ -78,7 +81,13 @@ public class LocationInfoDemo extends AppCompatActivity implements AMap.OnInfoWi
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.image_emoticon25))
                         .title(bean.getMemname())
                         .draggable(true));
+
+                bounds = new LatLngBounds.Builder()
+                        .include(new LatLng(posy, posx))
+                        .build();
+                
             }
+            aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10));
         }
     }
 
