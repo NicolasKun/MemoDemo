@@ -70,7 +70,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 startToActivity(FlowWordWrapDemo.class);
                 break;
             case 5:
-                startToActivity(ChooseLocalFile.class);
+//                startToActivity(ChooseLocalFile.class);
+                Toast.makeText(MainActivity.this, "暂不开放", Toast.LENGTH_SHORT).show();
                 break;
             case 6:
                 startToActivity(SecondList.class);

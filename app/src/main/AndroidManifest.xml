@@ -74,9 +74,6 @@
             android:value=".ui.SearableActivty" />
 
         <activity
-            android:name=".ui.ChooseLocalFile"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.learnncode.mediachooser.activity.HomeScreenMediaChooser"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
