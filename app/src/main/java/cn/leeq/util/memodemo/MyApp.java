@@ -1,10 +1,8 @@
 package cn.leeq.util.memodemo;
 
 import android.app.Application;
-import android.graphics.Bitmap;
 import android.os.Environment;
 
-import com.androidquery.callback.BitmapAjaxCallback;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -31,12 +29,6 @@ public class MyApp extends Application {
         app = this;
         x.Ext.init(this);
         initUIL();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        BitmapAjaxCallback.clearCache();
     }
 
     public static MyApp getInstance() {
