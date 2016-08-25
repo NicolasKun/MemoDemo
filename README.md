@@ -7,7 +7,7 @@
 
 · 使用xUtils3数据库功能
 
-· 使用Choose-Media选择本地视频
+· choose-media模块暂不开放
 
 · 二级列表 和 三级联动选择城市
 
