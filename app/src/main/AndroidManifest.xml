@@ -73,10 +73,6 @@
             android:name="android.app.default_searchable"
             android:value=".ui.SearableActivty" />
 
-        <activity
-            android:name="com.learnncode.mediachooser.activity.HomeScreenMediaChooser"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.SecondList" />
         <activity
             android:name=".ui.SelectLabel"
@@ -84,15 +80,18 @@
             android:theme="@style/dialogActivityStyle" />
         <activity
             android:name=".ui.StepViewDemo"
+            android:label="步骤指示器"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MultiImageSelect"
+            android:label="图片选择器"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.FlowWordWrapDemo"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PopupAnimDemo"
+            android:label="弹出动画演示"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.DialogActivity"
@@ -100,12 +99,15 @@
             android:theme="@style/dialogActivity" />
         <activity
             android:name=".ui.JCVideoPlayerDemo"
+            android:label="JCVideoPlayer演示"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.QRDemo"
+            android:label="ZXing演示"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.NumDateFormatChinese"
+            android:label="日期格式化"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.JudgeDate"
@@ -115,25 +117,30 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.JudgeBtnStateDemo"
+            android:label="按钮状态演示"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AutoLoadMore"
+            android:label="自动加载更多"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LocationInfoDemo"
+            android:label="高德"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CaptureActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RetrofitDemo"
+            android:label="Retrofit简单应用"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.BlueToothDemo" />
+        <activity android:name=".ui.BlueToothDemo"
+            android:screenOrientation="portrait"
+            android:label="蓝牙应用"/>
         <activity
             android:name=".ui.SelectDevice"
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:screenOrientation="portrait"/>
-
     </application>
 
 </manifest>

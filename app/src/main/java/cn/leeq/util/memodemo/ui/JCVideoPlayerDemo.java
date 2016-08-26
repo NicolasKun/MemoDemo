@@ -12,11 +12,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class JCVideoPlayerDemo extends AppCompatActivity {
 
     private JCVideoPlayerStandard playerStandard;
-    /*
-    "http://fengss.com:8085/uploads/13412345678/1467277546001_339255863.MP4"
-    "http://fengss.com:8085/uploads/13412345678/1467277546079_27347417.jpg"
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +19,7 @@ public class JCVideoPlayerDemo extends AppCompatActivity {
         playerStandard = (JCVideoPlayerStandard) findViewById(R.id.jpd_player);
 
         playerStandard.setUp(Constants.VIDEO_1, JCVideoPlayer.SCREEN_LAYOUT_LIST, "JAZZ");
-        
+
     }
 
     public void playStart(View view) {

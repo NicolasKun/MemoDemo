@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (i == 0) {
-            startActivity(new Intent(this,AutoLoadMore.class));
+            startToActivity(AutoLoadMore.class);
         }
         return true;
     }
