@@ -35,4 +35,10 @@ public class Constants {
     public static final LatLng OTHERS_2 = new LatLng(39.904032,116.407525);
     public static final LatLng OTHERS_3 = new LatLng(39.914032,116.377525);
 
+    /**
+     * Video Path
+     */
+    public static final String VIDEO_1 = "http://ocgl54rby.bkt.clouddn.com/Caro%20Emerald%20-%20Tangled%20Up.mp4";
+    public static final String VIDEO_2 = "http://ocgl54rby.bkt.clouddn.com/Material%20Design%20Motion%20-%20YouTube.MP4";
+
 }
