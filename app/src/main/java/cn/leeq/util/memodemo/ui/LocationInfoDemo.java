@@ -143,7 +143,6 @@ public class LocationInfoDemo extends AppCompatActivity implements AMap.OnInfoWi
         Toast.makeText(LocationInfoDemo.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         mListener = onLocationChangedListener;
@@ -170,7 +169,6 @@ public class LocationInfoDemo extends AppCompatActivity implements AMap.OnInfoWi
         }
         mlocationClient = null;
     }
-
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {

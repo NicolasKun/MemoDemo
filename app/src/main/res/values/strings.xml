@@ -19,6 +19,7 @@
         <item>定位信息</item>
         <item>Retrofit</item>
         <item>蓝牙</item>
+        <item>七牛云\n上传</item>
     </string-array>
     <string name="title_activity_xutils_dbdemo">XUtilsDBDemo</string>
     <string name="menu_search">搜索</string>

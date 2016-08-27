@@ -106,6 +106,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 16:
                 startToActivity(BlueToothDemo.class);
                 break;
+            case 17:
+                startToActivity(QiniuDemo.class);
+                break;
         }
     }
 

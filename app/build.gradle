@@ -9,12 +9,12 @@ android {
             storePassword '999999'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "cn.leeq.util.memodemo"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         signingConfig signingConfigs.config
@@ -51,4 +51,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'fm.jiecao:jiecaovideoplayer:4.6.2'
+    compile 'com.qiniu:qiniu-android-sdk:7.2.2'
 }
