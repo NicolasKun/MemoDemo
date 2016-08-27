@@ -12,9 +12,6 @@ import android.widget.PopupWindow;
 import cn.leeq.util.memodemo.R;
 
 
-/**
- * Created by 云星空科技 on 2016/4/5.
- */
 public class DDPopupWindow extends PopupWindow  {
     private View contentView;
     private Button btnZan,btnPingLun;

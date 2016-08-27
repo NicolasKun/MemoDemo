@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_progress_layout">
+        <ImageView
+            android:id="@+id/rp_iv_recorder"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerInside"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/level_recorder"/>
+        <TextView
+            android:id="@+id/rp_tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorProText"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"
+            android:text="按住说话"/>
+    </RelativeLayout>
+</LinearLayout>
