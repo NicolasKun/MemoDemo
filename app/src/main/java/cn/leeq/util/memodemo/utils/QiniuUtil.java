@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import org.xutils.http.RequestParams;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -69,12 +71,24 @@ public class QiniuUtil {
                     new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
-                            String ss = key + "\n" + info + "\n" + response;
-                            Message message = handler.obtainMessage();
-                            message.what = 0;
-                            message.obj = ss;
-                            handler.sendMessage(message);
-                            Log.e("test", ss);
+                            Log.e("test", "上传 " + info);
+                            if (info.statusCode==200) {
+                                String ip = info.ip;
+                                String duration = info.duration+"";
+                                long l1 = info.timeStamp*1000;
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                String format = dateFormat.format(new Date(l1));
+                                String ss = "ip             :" + ip +"\n返回码     : " + info.statusCode + "\n操作时长 : " + duration + "\n创建时间 : " + format;
+                                Message message = handler.obtainMessage();
+                                message.what = 0;
+                                message.obj = ss;
+                                handler.sendMessage(message);
+                            } else {
+                                Message message = handler.obtainMessage();
+                                message.what = 1;
+                                message.obj = info.statusCode;
+                                handler.sendMessage(message);
+                            }
                         }
                     }, null);
 

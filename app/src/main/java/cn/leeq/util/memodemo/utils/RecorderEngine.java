@@ -179,9 +179,9 @@ public class RecorderEngine {
         // 设置音频文件的编码：AAC/AMR_NB/AMR_MB/Default
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 编码
-        mMediaRecorder.setAudioEncodingBitRate(4000);// 比特率
+        mMediaRecorder.setAudioEncodingBitRate(16);// 比特率
         // mMediaRecorder.setAudioSamplingRate(4000);// 采样率
-        mMediaRecorder.setAudioChannels(1);// 单声道
+        mMediaRecorder.setAudioChannels(2);// 立体声
         mMediaRecorder.setOnInfoListener(mInfoListener);
         mMediaRecorder.setOutputFile(mRecordFile.getAbsolutePath());
         mMediaRecorder.setMaxDuration(60 * 1000);

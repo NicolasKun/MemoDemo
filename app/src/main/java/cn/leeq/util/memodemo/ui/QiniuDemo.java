@@ -1,10 +1,17 @@
 package cn.leeq.util.memodemo.ui;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,27 +20,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.xutils.http.RequestParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.config.Constants;
 import cn.leeq.util.memodemo.utils.QiniuUtil;
 import cn.leeq.util.memodemo.utils.RecorderEngine;
 
-public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, MediaRecorder.OnInfoListener, RecorderEngine.RecordListener, RecorderEngine.RecordTimeListener {
+public class QiniuDemo extends BaseActivity implements View.OnTouchListener, View.OnClickListener, MediaRecorder.OnInfoListener, RecorderEngine.RecordListener, RecorderEngine.RecordTimeListener {
 
-    private TextView tvResult,tvLoacalFile,tvInfo;
+    private TextView tvResult,tvLoacalFile,tvInfo,rbStartRecorder;
     private FrameLayout layoutPw;
     private ImageView ivRecorder;
-    private TextView rbStartRecorder;
     private Button btnPost;
     private MediaPlayer mediaPlayer;
     private RecorderEngine mRecorderEngine;
     private String mLocalRecorderPath;
+    private RelativeLayout layoutPlayAudio;
+    private ContentLoadingProgressBar pbPlayAudio;
+    private RadioButton rbPlayAudio;
+    private String mLocalKey;
+    private String mDownloadVoicePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +65,17 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
         rbStartRecorder = (TextView) findViewById(R.id.qd_rb_start_recorder);
         tvInfo = (TextView) findViewById(R.id.rp_tv_info);
         btnPost = (Button) findViewById(R.id.qd_btn_post);
+        layoutPlayAudio = (RelativeLayout) findViewById(R.id.qd_layout_play);
+        pbPlayAudio = (ContentLoadingProgressBar) findViewById(R.id.qd_progress_bar_play);
+        rbPlayAudio = (RadioButton) findViewById(R.id.qd_rb_play_audio);
         btnPost.setOnClickListener(this);
+        rbPlayAudio.setOnClickListener(this);
         btnPost.setEnabled(false);
         rbStartRecorder.setOnTouchListener(this);
         ivRecorder.setImageLevel(1);
-        mrecorder();
+        pbPlayAudio.getIndeterminateDrawable().setColorFilter(new PorterDuffColorFilter(Color.parseColor("#59b53f"), PorterDuff.Mode.SRC_ATOP));
+
+        layoutPlayAudio.setVisibility(View.GONE); //初始化时隐藏
     }
 
     //初始化录音模块
@@ -74,7 +96,6 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
         mRecorderEngine.SetVolumnChangeListener(new RecorderEngine.VolumnChangeListener() {
             @Override
             public void change(int level) {
-                Log.e("test", "音量等级 " + level);
                 ivRecorder.setImageLevel(level+1);
             }
         });
@@ -82,17 +103,12 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
         mRecorderEngine.RecordStart();
     }
 
-    private void mrecorder() {
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-        }
-
-    }
     //上传文件
     public void startPost() {
         String filePath = tvLoacalFile.getText().toString();
-        String substring = filePath.substring(filePath.lastIndexOf("/")+1);
-        QiniuUtil.upload(filePath,substring, this,handler);
+        mLocalKey = filePath.substring(filePath.lastIndexOf("/") + 1);
+        QiniuUtil.upload(filePath, mLocalKey, this, handler);
+        btnPost.setEnabled(false);
     }
 
     private Handler handler = new Handler() {
@@ -103,13 +119,42 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
                 case 0:
                     String result = (String) msg.obj;
                     tvResult.setText(result == null ? "null" : result);
-                    btnPost.setEnabled(false);
+                    layoutPlayAudio.setVisibility(View.VISIBLE);
+                    pbPlayAudio.setVisibility(View.VISIBLE);
+                    rbPlayAudio.setVisibility(View.GONE);
+
+                    downloadAndPlay();
+                    break;
+                case 1:
+                    String error = (String) msg.obj;
+                    tvResult.setText(error);
+                    break;
+                case 2:
+                    File downResult = (File) msg.obj;
+                    Log.e("test", "下载成功 " + downResult.getAbsolutePath());
+                    mDownloadVoicePath = downResult.getAbsolutePath().substring(0, downResult.getAbsolutePath().lastIndexOf("r") + 1);
+                    pbPlayAudio.setVisibility(View.GONE);
+                    rbPlayAudio.setVisibility(View.VISIBLE);
+                    break;
+                case 99:
+                    Toast.makeText(QiniuDemo.this, "下载失败", Toast.LENGTH_SHORT).show();
+                    layoutPlayAudio.setVisibility(View.GONE);
                     break;
             }
         }
     };
 
+    private void downloadAndPlay() {
+        RequestParams params = new RequestParams(Constants.DOMAIN + File.separator + mLocalKey);
+        params.setAutoResume(true);
+        params.setSaveFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/memo/download/" + mLocalKey.substring(0, mLocalKey.lastIndexOf(".") + 4));
+        loadByXUtils(params, handler, 2);
+    }
 
+
+    /**
+     * 录音按钮触摸事件的处理
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
@@ -153,7 +198,6 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:  //对于弹出权限申请对话框的处理
-                ivRecorder.setImageResource(R.mipmap.record_animate_14);
                 if (!mRecorderEngine.ismRecording()) {
                     return false;
                 }
@@ -165,10 +209,28 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
         return true;
     }
 
-
+    /**
+     * 点击POST按钮
+     * @param v
+     */
     @Override
     public void onClick(View v) {
-        startPost();
+        switch (v.getId()) {
+            case R.id.qd_btn_post:
+                startPost();
+                //FIXME 微信Url Scheme
+                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                ComponentName cn = new ComponentName("com.tencent.mm", "com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity");
+                intent.setData(Uri.parse("javascript:window.location.href='weixin://dl/favorites'"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+                intent.setComponent(cn);
+                startActivity(intent);*/
+                break;
+            case R.id.qd_rb_play_audio:
+                //Toast.makeText(QiniuDemo.this, mDownloadVoicePath+"", Toast.LENGTH_SHORT).show();
+                startPlay(mDownloadVoicePath);
+                break;
+        }
     }
 
     @Override
@@ -192,12 +254,45 @@ public class QiniuDemo extends AppCompatActivity implements View.OnTouchListener
 
     }
 
+    /**
+     * LifeCircle
+     */
     @Override
     protected void onStop() {
         super.onStop();
+        stopPlaying();
+        stopRecorder();
+    }
+
+    private void stopRecorder() {
         if (mRecorderEngine != null) {
             mRecorderEngine.RecordStop();
             mRecorderEngine.RecordDelete();
+        }
+    }
+
+    private void stopPlaying() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    private void startPlay(String filePath) {
+        try {
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(filePath);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
