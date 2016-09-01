@@ -27,4 +27,15 @@
     <string name="format_string">%1$d/%2$d</string>
 
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+
+    <!-- 保存到共享数据的值：0，1，2，3，4，5，6 -->
+    <string-array name="feeds_list">
+        <item>"0mm"</item>
+        <item>"5mm"</item>
+        <item>"10mm"</item>
+        <item>"15mm"</item>
+        <item>"20mm"</item>
+        <item>"25mm"</item>
+        <item>"30mm"</item>
+    </string-array>
 </resources>

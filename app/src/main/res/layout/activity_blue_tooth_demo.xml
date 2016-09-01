@@ -50,4 +50,9 @@
             android:onClick="blueTooth"
             android:text="打印小票"/>
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:id="@+id/bt_iv"/>
 </LinearLayout>

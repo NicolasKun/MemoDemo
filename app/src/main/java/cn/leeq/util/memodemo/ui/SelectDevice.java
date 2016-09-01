@@ -122,7 +122,6 @@ public class SelectDevice extends AppCompatActivity implements AdapterView.OnIte
                     canbeAdapter.add(noDevices);
                 }
             }
-
         }
     };
 

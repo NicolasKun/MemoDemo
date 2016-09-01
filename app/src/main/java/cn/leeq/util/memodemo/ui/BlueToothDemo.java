@@ -16,18 +16,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.zj.btsdk.BluetoothService;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Hashtable;
 import java.util.UUID;
 
+import HPRTAndroidSDK.HPRTPrinterHelper;
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.utils.PrintUtil;
+import cn.leeq.util.memodemo.utils.PublicAction;
 
 public class BlueToothDemo extends AppCompatActivity {
     private BluetoothAdapter adapter;
@@ -37,6 +48,7 @@ public class BlueToothDemo extends AppCompatActivity {
     private RadioButton rbSearch;
     private RadioButton rbPrintText;
     private RadioButton rbPrintTicket;
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,7 @@ public class BlueToothDemo extends AppCompatActivity {
 
     private void init() {
         rbSearch = (RadioButton) findViewById(R.id.bt_rb_search_blue_tooth);
+        iv = (ImageView) findViewById(R.id.bt_iv);
         tvDeviceName = (TextView) findViewById(R.id.bt_tv_device_name);
         adapter = BluetoothAdapter.getDefaultAdapter();
         rbPrintText = (RadioButton) findViewById(R.id.bt_rb_print_text);
@@ -88,17 +101,37 @@ public class BlueToothDemo extends AppCompatActivity {
                 if (text.length() > 0) {
                     mService.sendMessage(text, "GBK");
                 }*/
-                initPrinter();
-                String img = Environment.getExternalStorageDirectory().getAbsolutePath() + "/memo/test.jpeg";
-                Bitmap bitmap = BitmapFactory.decodeFile(img);
-                byte[] bytes = draw2PxPoint(bitmap);
-                mService.write(bytes);
-                
+                try {
+                    /*PublicAction action = new PublicAction(this);
+                    action.BeforePrintAction();
+                    HPRTPrinterHelper.PrintBarCode(
+                            70,
+                            "623100000051",
+                            3,
+                            80,
+                            2,
+                            1);
+                    action.AfterPrintAction();*/
+                    Bitmap qrCode = createQRCode("6231000000014", 200);
+                    iv.setImageBitmap(qrCode);
+                    mService.write(draw2PxPoint(qrCode));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 break;
             case R.id.bt_rb_print_ticket:
                 printTicket();
                 break;
         }
+    }
+
+    private byte[] getByteByBitmap(Bitmap bitmap) {
+        PrintUtil printPic = PrintUtil.getInstance();
+        printPic.initCanvas(800);
+        printPic.initPaint();
+        printPic.drawImage(0, 0, bitmap);
+        return printPic.printDraw();
     }
 
     protected void initPrinter() {
@@ -107,89 +140,128 @@ public class BlueToothDemo extends AppCompatActivity {
     }
 
 
-    /*************************************************************************
-     * 假设一个240*240的图片，分辨率设为24, 共分10行打印
-     * 每一行,是一个 240*24 的点阵, 每一列有24个点,存储在3个byte里面。
-     * 每个byte存储8个像素点信息。因为只有黑白两色，所以对应为1的位是黑色，对应为0的位是白色
-     **************************************************************************/
-    /**
-     * 把一张Bitmap图片转化为打印机可以打印的字节流
-     *
-     * @param bmp
-     * @return
-     */
-    public static byte[] draw2PxPoint(Bitmap bmp) {
-        //用来存储转换后的 bitmap 数据。为什么要再加1000，这是为了应对当图片高度无法
-        //整除24时的情况。比如bitmap 分辨率为 240 * 250，占用 7500 byte，
-        //但是实际上要存储11行数据，每一行需要 24 * 240 / 8 =720byte 的空间。再加上一些指令存储的开销，
-        //所以多申请 1000byte 的空间是稳妥的，不然运行时会抛出数组访问越界的异常。
-        int size = bmp.getWidth() * bmp.getHeight() / 8 + 1000;
-        byte[] data = new byte[size];
+    public static byte[] draw2PxPoint(Bitmap bit) {
+        byte[] data = new byte[16290];
         int k = 0;
-        //设置行距为0的指令
-        data[k++] = 0x1B;
-        data[k++] = 0x33;
-        data[k++] = 0x00;
-        // 逐行打印
-        for (int j = 0; j < bmp.getHeight() / 24f; j++) {
-            //打印图片的指令
+        for (int j = 0; j < 15; j++) {
             data[k++] = 0x1B;
             data[k++] = 0x2A;
-            data[k++] = 33;
-            data[k++] = (byte) (bmp.getWidth() % 256); //nL
-            data[k++] = (byte) (bmp.getWidth() / 256); //nH
-            //对于每一行，逐列打印
-            for (int i = 0; i < bmp.getWidth(); i++) {
-                //每一列24个像素点，分为3个字节存储
+            data[k++] = 33; // m=33时，选择24点双密度打印，分辨率达到200DPI。
+            data[k++] = 0x68;
+            data[k++] = 0x01;
+            for (int i = 0; i < 360; i++) {
                 for (int m = 0; m < 3; m++) {
-                    //每个字节表示8个像素点，0表示白色，1表示黑色
                     for (int n = 0; n < 8; n++) {
-                        byte b = px2Byte(i, j * 24 + m * 8 + n, bmp);
+                        byte b = px2Byte(i, j * 24 + m * 8 + n, bit);
                         data[k] += data[k] + b;
                     }
                     k++;
                 }
             }
-            data[k++] = 10;//换行
+            data[k++] = 10;
         }
         return data;
     }
 
     /**
-     * 灰度图片黑白化，黑色是1，白色是0
-     *
-     * @param x   横坐标
-     * @param y   纵坐标
-     * @param bit 位图
-     * @return
+     * 图片二值化，黑色是1，白色是0
      */
     public static byte px2Byte(int x, int y, Bitmap bit) {
-        if (x < bit.getWidth() && y < bit.getHeight()) {
-            byte b;
-            int pixel = bit.getPixel(x, y);
-            int red = (pixel & 0x00ff0000) >> 16; // 取高两位
-            int green = (pixel & 0x0000ff00) >> 8; // 取中两位
-            int blue = pixel & 0x000000ff; // 取低两位
-            int gray = RGB2Gray(red, green, blue);
-            if (gray < 128) {
-                b = 1;
-            } else {
-                b = 0;
-            }
-            return b;
+        byte b;
+        int pixel = bit.getPixel(x, y);
+        int red = (pixel & 0x00ff0000) >> 16; // 取高两位
+        int green = (pixel & 0x0000ff00) >> 8; // 取中两位
+        int blue = pixel & 0x000000ff; // 取低两位
+        int gray = RGB2Gray(red, green, blue);
+        if ( gray < 128 ){
+            b = 1;
+        } else {
+            b = 0;
         }
-        return 0;
+        return b;
     }
 
     /**
      * 图片灰度的转化
      */
-    private static int RGB2Gray(int r, int g, int b) {
+    private static int RGB2Gray(int r, int g, int b){
         int gray = (int) (0.29900 * r + 0.58700 * g + 0.11400 * b);  //灰度转化公式
-        return gray;
+        return  gray;
     }
 
 
+    /**
+     * 把一张Bitmap图片转化为打印机可以打印的bit
+     * @param bit
+     * @return
+     */
+    public static byte[] pic2PxPoint(Bitmap bit){
+        long start = System.currentTimeMillis();
+        byte[] data = new byte[16290];
+        int k = 0;
+        for (int i = 0; i < 15; i++) {
+            data[k++] = 0x1B;
+            data[k++] = 0x2A;
+            data[k++] = 33; // m=33时，选择24点双密度打印，分辨率达到200DPI。
+            data[k++] = 0x68;
+            data[k++] = 0x01;
+            for (int x = 0; x < 360; x++) {
+                for (int m = 0; m < 3; m++) {
+                    byte[]  by = new byte[8];
+                    for (int n = 0; n < 8; n++) {
+                        byte b = px2Byte(x, i * 24 + m * 8 +7-n, bit);
+                        by[n] = b;
+                    }
+                    data[k] = (byte) changePointPx1(by);
+                    k++;
+                }
+            }
+            data[k++] = 10;
+        }
+        long end = System.currentTimeMillis();
+        long str = end - start;
+        Log.i("TAG", "str:" + str);
+        return data;
+    }
+
+    /**
+     * 将[1,0,0,1,0,0,0,1]这样的二进制转为化十进制的数值（效率更高）
+     * @param arry
+     * @return
+     */
+    public static int changePointPx1(byte[] arry){
+        int v = 0;
+        for (int j = 0; j <arry.length; j++) {
+            if( arry[j] == 1) {
+                v = v | 1 << j;
+            }
+        }
+        return v;
+    }
+
+    private static final int BLACK = 0xff000000;
+
+    public static Bitmap createQRCode(String str, int widthAndHeight) throws WriterException {
+        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        BitMatrix matrix = new MultiFormatWriter().encode(str,
+                BarcodeFormat.ITF, widthAndHeight, 80);
+        int width = matrix.getWidth();
+        int height = matrix.getHeight();
+        int[] pixels = new int[width * height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (matrix.get(x, y)) {
+                    pixels[y * width + x] = BLACK;
+                }
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
 
 
     /**
