@@ -109,6 +109,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 17:
                 startToActivity(QiniuDemo.class);
                 break;
+            case 18:
+                startToActivity(IflyVoiceDemo.class);
+                break;
         }
     }
 

@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 允许程序改变网络连接状态 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 允许访问振动设备 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 控制摄像头 -->
@@ -143,7 +145,12 @@
             android:name=".ui.SelectDevice"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".ui.QiniuDemo"></activity>
+        <activity android:name=".ui.QiniuDemo"
+            android:screenOrientation="portrait"
+            android:label="录音上传并播放"/>
+        <activity android:name=".ui.IflyVoiceDemo"
+            android:screenOrientation="portrait"
+            android:label="语音合成"/>
     </application>
 
 </manifest>

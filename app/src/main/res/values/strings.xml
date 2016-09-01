@@ -20,6 +20,7 @@
         <item>Retrofit</item>
         <item>蓝牙</item>
         <item>录音\n上传\t播放</item>
+        <item>讯飞\n语音合成</item>
     </string-array>
     <string name="title_activity_xutils_dbdemo">XUtilsDBDemo</string>
     <string name="menu_search">搜索</string>
@@ -27,7 +28,7 @@
     <string name="format_string">%1$d/%2$d</string>
 
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
-
+    <string name="ifly_voice_content">您有一个新订单啦\n收件地址在南美洲巴西联邦共和国伊比公园东门\n现在接单吗</string>
     <!-- 保存到共享数据的值：0，1，2，3，4，5，6 -->
     <string-array name="feeds_list">
         <item>"0mm"</item>
