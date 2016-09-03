@@ -8,6 +8,13 @@ import cn.leeq.util.memodemo.R;
  * Created by LeeQ on 2016-6-29.
  */
 public class Constants {
+
+    /**
+     * 百度云推送
+     * channelId、userId等
+     */
+    public static String BD_PUSH_STRING_CACHE = "";
+
     /**
      * 标签
      */

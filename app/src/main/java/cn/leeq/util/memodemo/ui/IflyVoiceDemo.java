@@ -1,5 +1,6 @@
 package cn.leeq.util.memodemo.ui;
 
+import android.app.Notification;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.CustomPushNotificationBuilder;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.baidu.android.pushservice.PushMessageReceiver;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
@@ -31,21 +36,38 @@ public class IflyVoiceDemo extends AppCompatActivity {
     //合成进度
     private int mIndexOfBuffering = 0;
     private int mIndexOfPlaying = 0;
+    private String sContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ifly_voice_demo);
         SpeechUtility.createUtility(this, SpeechConstant.APPID + "=57c7d3c0");
         init();
-
     }
+
+
 
     private void init() {
         etContent = (EditText) findViewById(R.id.if_ed_content);
         mTts = SpeechSynthesizer.createSynthesizer(this, mTtsInitListener);
         mToast = Toast.makeText(this,"",Toast.LENGTH_SHORT);
-        etContent.setText(getResources().getString(R.string.ifly_voice_content));
+        etContent.setText("您有一个新订单啦~");
+        sContent = getIntent().getStringExtra("speech");
     }
+
+    private void startPlay() {
+        setParams();
+        int code = mTts.startSpeaking(sContent, mTtsLinstener);
+
+        if (code != ErrorCode.SUCCESS) {
+            if (code == ErrorCode.ERROR_COMPONENT_NOT_INSTALLED)
+                showToast("没有安装");
+            else
+                showToast("语音合成失败 " + code);
+        }
+    }
+
 
     //在线合成语音并播放
     public void play(View view) {
@@ -162,4 +184,5 @@ public class IflyVoiceDemo extends AppCompatActivity {
         }
         mTts.destroy();
     }
+
 }

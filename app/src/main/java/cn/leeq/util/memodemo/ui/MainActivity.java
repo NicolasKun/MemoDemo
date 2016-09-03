@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +30,16 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initPUSH();
         initView();
         loadData();
     }
+
+    //初始化百度云推送
+    private void initPUSH() {
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "t8Pi76td0gHCCW2HkDH5BaB5");
+    }
+
 
     private void loadData() {
         String[] array = getResources().getStringArray(R.array.am_gv);
