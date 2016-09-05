@@ -3,6 +3,10 @@ package cn.leeq.util.memodemo;
 import android.app.Application;
 import android.os.Environment;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -28,6 +32,7 @@ public class MyApp extends Application {
         super.onCreate();
         app = this;
         x.Ext.init(this);
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=57c7d3c0");
         initUIL();
     }
 

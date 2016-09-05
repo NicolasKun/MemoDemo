@@ -30,16 +30,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initPUSH();
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "t8Pi76td0gHCCW2HkDH5BaB5");
         initView();
         loadData();
     }
-
-    //初始化百度云推送
-    private void initPUSH() {
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "t8Pi76td0gHCCW2HkDH5BaB5");
-    }
-
 
     private void loadData() {
         String[] array = getResources().getStringArray(R.array.am_gv);
@@ -73,6 +67,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 2:
                 startToActivity(MultiImageSelect.class);
                 break;
+
             case 3:
                 startToActivity(FriendCircleDemo.class);
                 break;

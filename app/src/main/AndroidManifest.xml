@@ -173,7 +173,11 @@
         <activity
             android:name=".ui.IflyVoiceDemo"
             android:screenOrientation="portrait"
-            android:label="语音合成"/>
+            android:label="语音合成">
+            <intent-filter>
+                <action android:name="cn.leeq.util.memodemo.Ifly" />
+            </intent-filter>
+        </activity>
 
         <!-- push应用定义消息receiver声明 -->
         <receiver android:name=".CustomPushReceiver" >
@@ -186,7 +190,6 @@
                 <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
             </intent-filter>
         </receiver>
-
         <!-- push必须的receviver和service声明 -->
         <receiver
             android:name="com.baidu.android.pushservice.PushServiceReceiver"
@@ -216,7 +219,6 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
 
         <service
             android:name="com.baidu.android.pushservice.PushService"

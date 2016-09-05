@@ -14,12 +14,13 @@ public class Constants {
      * channelId、userId等
      */
     public static String BD_PUSH_STRING_CACHE = "";
+    public static String BD_PUSH_CONTENT      = "";
 
     /**
      * 标签
      */
     public static final String WORD_WRAP_TEST_LABLE[] = {"核桃","杏仁","瓜子","碧根果","开心果","榛子"};
-    public static final int textColors[] = {
+    public static final int textColors[]              = {
             R.drawable.flow_word_color_red,
             R.drawable.flow_word_color_orange,
             R.drawable.flow_word_color_yellow,
@@ -27,6 +28,7 @@ public class Constants {
             R.drawable.flow_word_color_bule,
             R.drawable.flow_word_color_purple,
     };
+
     /**
      * 数据
      */
@@ -38,9 +40,9 @@ public class Constants {
      * 经纬度
      */
     public static final LatLng JIJIAMIAO = new LatLng(39.847762,116.335087);
-    public static final LatLng OTHERS_1 = new LatLng(39.857722,116.337087);
-    public static final LatLng OTHERS_2 = new LatLng(39.904032,116.407525);
-    public static final LatLng OTHERS_3 = new LatLng(39.914032,116.377525);
+    public static final LatLng OTHERS_1  = new LatLng(39.857722,116.337087);
+    public static final LatLng OTHERS_2  = new LatLng(39.904032,116.407525);
+    public static final LatLng OTHERS_3  = new LatLng(39.914032,116.377525);
 
     /**
      * 七牛云外链域名

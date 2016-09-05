@@ -23,6 +23,7 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.config.Constants;
 
 public class IflyVoiceDemo extends AppCompatActivity {
 
@@ -42,23 +43,25 @@ public class IflyVoiceDemo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ifly_voice_demo);
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=57c7d3c0");
+
         init();
     }
-
-
 
     private void init() {
         etContent = (EditText) findViewById(R.id.if_ed_content);
         mTts = SpeechSynthesizer.createSynthesizer(this, mTtsInitListener);
         mToast = Toast.makeText(this,"",Toast.LENGTH_SHORT);
-        etContent.setText("您有一个新订单啦~");
+        etContent.setText(getResources().getString(R.string.ifly_et_default));
         sContent = getIntent().getStringExtra("speech");
+
+        if (!Constants.BD_PUSH_CONTENT.equals("")) {
+            startPlay();
+        }
     }
 
     private void startPlay() {
         setParams();
-        int code = mTts.startSpeaking(sContent, mTtsLinstener);
+        int code = mTts.startSpeaking(Constants.BD_PUSH_CONTENT, mTtsLinstener);
 
         if (code != ErrorCode.SUCCESS) {
             if (code == ErrorCode.ERROR_COMPONENT_NOT_INSTALLED)
@@ -67,7 +70,6 @@ public class IflyVoiceDemo extends AppCompatActivity {
                 showToast("语音合成失败 " + code);
         }
     }
-
 
     //在线合成语音并播放
     public void play(View view) {

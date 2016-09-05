@@ -151,12 +151,7 @@ public class CustomPushReceiver extends PushMessageReceiver {
     public void onNotificationClicked(Context context, String title,
                                       String description, String customContentString) {
         Log.e("test", "onNotificationClicked点击推送消息\n标题 " + title + "\n描述 " + description);
-
-        String content = title + description;
-        Intent intent = new Intent(context.getApplicationContext(), IflyVoiceDemo.class);
-        intent.putExtra("speech", content);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.getApplicationContext().startActivity(intent);
+        Constants.BD_PUSH_CONTENT = description;
     }
 
     /**
