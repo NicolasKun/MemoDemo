@@ -173,6 +173,7 @@
         <activity
             android:name=".ui.IflyVoiceDemo"
             android:screenOrientation="portrait"
+            android:theme="@style/ifly_dialog_activity"
             android:label="语音合成">
             <intent-filter>
                 <action android:name="cn.leeq.util.memodemo.Ifly" />

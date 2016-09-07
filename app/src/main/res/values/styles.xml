@@ -27,6 +27,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ifly_dialog_activity" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="scan" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>

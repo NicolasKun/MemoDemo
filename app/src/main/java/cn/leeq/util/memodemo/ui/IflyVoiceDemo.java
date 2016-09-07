@@ -1,6 +1,5 @@
 package cn.leeq.util.memodemo.ui;
 
-import android.app.Notification;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,17 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.baidu.android.pushservice.PushMessageReceiver;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechEvent;
 import com.iflytek.cloud.SpeechSynthesizer;
-import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
 import cn.leeq.util.memodemo.R;
@@ -27,17 +21,14 @@ import cn.leeq.util.memodemo.config.Constants;
 
 public class IflyVoiceDemo extends AppCompatActivity {
 
-    private EditText etContent;
-    private SpeechSynthesizer mTts;
-    private Toast mToast;
-
-    //引擎类型
-    private String mEngineType = SpeechConstant.TYPE_CLOUD;
+    private Toast              mToast;
+    private String             sContent;
+    private EditText           etContent;
+    private SpeechSynthesizer  mTts;
 
     //合成进度
+    private int mIndexOfPlaying   = 0;
     private int mIndexOfBuffering = 0;
-    private int mIndexOfPlaying = 0;
-    private String sContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

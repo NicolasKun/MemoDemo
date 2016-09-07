@@ -8,9 +8,12 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.List;
 
+import cn.leeq.util.memodemo.CourierLoginBack;
 import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.Yu;
+import cn.leeq.util.memodemo.bean.CourierInfo;
 import cn.leeq.util.memodemo.bean.Status;
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +67,7 @@ public class RetrofitDemo extends BaseActivity {
         return sb.toString();
     }
 
-    private void loadData() throws IOException {
+    private void loadData() {
         Yu yu = retrofit.create(Yu.class);
 
         Call<List<Status>> listCall = yu.withYu("NicolasKun", "memodemo");
@@ -73,6 +76,8 @@ public class RetrofitDemo extends BaseActivity {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
                 List<Status> body = response.body();
+                Headers headers = response.headers();
+
                 for (Status status : body) {
                     String s = "结果    " + status.getContributions() +
                             "\n登陆者 " + status.getLogin() + "\n登陆ID " + status.getId();
@@ -89,10 +94,42 @@ public class RetrofitDemo extends BaseActivity {
     }
 
     public void getResult(View view) {
-        try {
-            loadData();
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (view.getId()) {
+            case R.id.rd_btn_get:
+                loadData();
+                break;
+            case R.id.rd_btn_post:
+                loadCourierInfo();
+                break;
         }
     }
+
+    private void loadCourierInfo() {
+        Retrofit build = new Retrofit.Builder()
+                .baseUrl("http://fengss.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CourierLoginBack loginBack = build.create(CourierLoginBack.class);
+        Call<CourierInfo> info = loginBack.getInfo("13811111111", "1");
+
+        info.enqueue(new Callback<CourierInfo>() {
+            @Override
+            public void onResponse(Call<CourierInfo> call, Response<CourierInfo> response) {
+                Log.e("test", "请求 "+response.code()+"\nheader "+response.headers().get("Content-Type"));
+                CourierInfo body = response.body();
+                String result = "body " + body.getUsername() + "\nloginid " + body.getLoginid();
+                Log.e("test", result);
+                
+                tvResult.setText(result);
+            }
+
+            @Override
+            public void onFailure(Call<CourierInfo> call, Throwable t) {
+                String message = t.getMessage();
+                Log.e("test", "" + message);
+            }
+        });
+    }
+
 }

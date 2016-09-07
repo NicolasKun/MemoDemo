@@ -4,12 +4,26 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent">
-    <Button
-        android:onClick="getResult"
-        android:id="@+id/rd_btn_get"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GET !"/>
+        android:orientation="horizontal">
+        <Button
+            android:onClick="getResult"
+            android:id="@+id/rd_btn_get"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GET !"/>
+        <Button
+            android:onClick="getResult"
+            android:id="@+id/rd_btn_post"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="POST !"/>
+    </LinearLayout>
+
     <TextView
         android:layout_gravity="center_horizontal"
         android:id="@+id/rd_tv_result"
