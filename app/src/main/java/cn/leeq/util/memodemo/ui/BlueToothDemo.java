@@ -2,14 +2,8 @@ package cn.leeq.util.memodemo.ui;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -28,16 +22,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.zj.btsdk.BluetoothService;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Hashtable;
-import java.util.UUID;
 
 import HPRTAndroidSDK.HPRTPrinterHelper;
 import cn.leeq.util.memodemo.R;
-import cn.leeq.util.memodemo.utils.PrintUtil;
 import cn.leeq.util.memodemo.utils.PublicAction;
 
 public class BlueToothDemo extends AppCompatActivity {
@@ -101,8 +89,7 @@ public class BlueToothDemo extends AppCompatActivity {
                 if (text.length() > 0) {
                     mService.sendMessage(text, "GBK");
                 }*/
-                try {
-                    /*PublicAction action = new PublicAction(this);
+                /*PublicAction action = new PublicAction(this);
                     action.BeforePrintAction();
                     HPRTPrinterHelper.PrintBarCode(
                             70,
@@ -112,33 +99,57 @@ public class BlueToothDemo extends AppCompatActivity {
                             2,
                             1);
                     action.AfterPrintAction();*/
-                    Bitmap qrCode = createQRCode("6231000000014", 200);
+                Bitmap qrCode = null;
+                try {
+                    qrCode = createQRCode("62310000", 200);
+
                     iv.setImageBitmap(qrCode);
-                    mService.write(draw2PxPoint(qrCode));
-                } catch (Exception e) {
+                    Log.e("test", "条形码宽度  " + qrCode.getWidth() + "");
+                    //sendMessage(qrCode);
+
+                    PublicAction PAct=new PublicAction(this);
+                    PAct.BeforePrintAction();
+                    HPRTPrinterHelper.PrintBarCode(65,
+                            "623100000012",
+                            3,
+                            80,
+                            2,
+                            0);
+                    PAct.AfterPrintAction();
+
+                } catch (WriterException e) {
                     e.printStackTrace();
                 }
-
                 break;
             case R.id.bt_rb_print_ticket:
-                printTicket();
+
                 break;
         }
     }
 
-    private byte[] getByteByBitmap(Bitmap bitmap) {
-        PrintUtil printPic = PrintUtil.getInstance();
-        printPic.initCanvas(800);
-        printPic.initPaint();
-        printPic.drawImage(0, 0, bitmap);
-        return printPic.printDraw();
-    }
+    private void sendMessage(Bitmap bitmap) {
+        // Check that we're actually connected before trying anything
+        if (mService.getState() != BluetoothService.STATE_CONNECTED) {
+            Toast.makeText(this, "蓝牙没有连接", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // 发送打印图片前导指令
+        byte[] start = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1B,
+                0x40, 0x1B, 0x33, 0x00 };
+        mService.write(start);
 
-    protected void initPrinter() {
-        byte[] buf = new byte[]{0x1B, 0x40};
-        mService.write(buf);
-    }
+        /**获取打印图片的数据**/
+//		byte[] send = getReadBitMapBytes(bitmap);
 
+
+        byte[] draw2PxPoint = draw2PxPoint(bitmap);
+
+        mService.write(draw2PxPoint);
+        // 发送结束指令
+        byte[] end = { 0x1d, 0x4c, 0x1f, 0x00 };
+        mService.write(end);
+
+    }
 
     public static byte[] draw2PxPoint(Bitmap bit) {
         byte[] data = new byte[16290];
@@ -188,7 +199,6 @@ public class BlueToothDemo extends AppCompatActivity {
         int gray = (int) (0.29900 * r + 0.58700 * g + 0.11400 * b);  //灰度转化公式
         return  gray;
     }
-
 
     /**
      * 把一张Bitmap图片转化为打印机可以打印的bit
@@ -245,7 +255,7 @@ public class BlueToothDemo extends AppCompatActivity {
         Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         BitMatrix matrix = new MultiFormatWriter().encode(str,
-                BarcodeFormat.ITF, widthAndHeight, 80);
+                BarcodeFormat.EAN_8, widthAndHeight, 80);
         int width = matrix.getWidth();
         int height = matrix.getHeight();
         int[] pixels = new int[width * height];
@@ -322,14 +332,7 @@ public class BlueToothDemo extends AppCompatActivity {
                             break;
                     }
                     break;
-                case BluetoothService.MESSAGE_CONNECTION_LOST:
-                    Toast.makeText(BlueToothDemo.this, "设备连接中断", Toast.LENGTH_SHORT).show();
-                    rbPrintText.setEnabled(false);
-                    rbPrintTicket.setEnabled(false);
-                    break;
-                case BluetoothService.MESSAGE_UNABLE_CONNECT:
-                    Toast.makeText(BlueToothDemo.this, "无法连接到设备", Toast.LENGTH_SHORT).show();
-                    break;
+
             }
         }
     };
