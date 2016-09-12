@@ -78,7 +78,7 @@ public class QiniuUtil {
                                 long l1 = info.timeStamp*1000;
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                                 String format = dateFormat.format(new Date(l1));
-                                String ss = "ip             :" + ip +"\n返回码     : " + info.statusCode + "\n操作时长 : " + duration + "\n创建时间 : " + format;
+                                String ss = "ip              : " + ip +"\n返回码     : " + info.statusCode + "\n操作时长 : " + duration + "\n创建时间 : " + format;
                                 Message message = handler.obtainMessage();
                                 message.what = 0;
                                 message.obj = ss;
