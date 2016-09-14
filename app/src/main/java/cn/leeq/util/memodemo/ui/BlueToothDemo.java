@@ -3,7 +3,6 @@ package cn.leeq.util.memodemo.ui;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -15,18 +14,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.zj.btsdk.BluetoothService;
 
-import java.util.Hashtable;
-
-import HPRTAndroidSDK.HPRTPrinterHelper;
 import cn.leeq.util.memodemo.R;
-import cn.leeq.util.memodemo.utils.PublicAction;
+import cn.leeq.util.memodemo.utils.PrintUtil;
 
 public class BlueToothDemo extends AppCompatActivity {
     private BluetoothAdapter adapter;
@@ -37,11 +28,13 @@ public class BlueToothDemo extends AppCompatActivity {
     private RadioButton rbPrintText;
     private RadioButton rbPrintTicket;
     private ImageView iv;
+    private PrintUtil printUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue_tooth_demo);
+        setTitle("CPCL指令打印机演示");
         init();
     }
 
@@ -59,6 +52,8 @@ public class BlueToothDemo extends AppCompatActivity {
         }
         rbPrintText.setEnabled(false);
         rbPrintTicket.setEnabled(false);
+
+        printUtil = new PrintUtil(mService);
     }
 
     private void openBlueTooth() {
@@ -85,215 +80,45 @@ public class BlueToothDemo extends AppCompatActivity {
                 }
                 break;
             case R.id.bt_rb_print_text:
-                /*String text = "诛仙手游8月10日11时公测\n\n";
-                if (text.length() > 0) {
-                    mService.sendMessage(text, "GBK");
-                }*/
-                /*PublicAction action = new PublicAction(this);
-                    action.BeforePrintAction();
-                    HPRTPrinterHelper.PrintBarCode(
-                            70,
-                            "623100000051",
-                            3,
-                            80,
-                            2,
-                            1);
-                    action.AfterPrintAction();*/
-                Bitmap qrCode = null;
-                try {
-                    qrCode = createQRCode("62310000", 200);
-
-                    iv.setImageBitmap(qrCode);
-                    Log.e("test", "条形码宽度  " + qrCode.getWidth() + "");
-                    //sendMessage(qrCode);
-
-                    PublicAction PAct=new PublicAction(this);
-                    PAct.BeforePrintAction();
-                    HPRTPrinterHelper.PrintBarCode(65,
-                            "623100000012",
-                            3,
-                            80,
-                            2,
-                            0);
-                    PAct.AfterPrintAction();
-
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
+                StringBuffer s = new StringBuffer();
+                s.append(printUtil.drawControll(300));
+                s.append(printUtil.drawText(0, 0, 10, 10, "北京市丰台区纪家庙"));
+                s.append(printUtil.drawBarCode(1, 1, 70, 150, 10, "623100000056"));
+                s.append(printUtil.drawLine(10, 150, 10, 300));
+                s.append(printUtil.drawPrint());
+                String ss = s.toString();
+                mService.sendMessage(ss,"GBK");
                 break;
             case R.id.bt_rb_print_ticket:
-
+                StringBuffer sb = new StringBuffer();
+                sb.append(printUtil.drawControll(400));
+                sb.append(printRecStub());
+                sb.append(printUtil.drawPrint());
+                Log.e("test", "打印\n" + sb.toString());
+                mService.sendMessage(sb.toString(),"GBK");
                 break;
         }
     }
 
-    private void sendMessage(Bitmap bitmap) {
-        // Check that we're actually connected before trying anything
-        if (mService.getState() != BluetoothService.STATE_CONNECTED) {
-            Toast.makeText(this, "蓝牙没有连接", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 发送打印图片前导指令
-        byte[] start = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1B,
-                0x40, 0x1B, 0x33, 0x00 };
-        mService.write(start);
 
-        /**获取打印图片的数据**/
-//		byte[] send = getReadBitMapBytes(bitmap);
-
-
-        byte[] draw2PxPoint = draw2PxPoint(bitmap);
-
-        mService.write(draw2PxPoint);
-        // 发送结束指令
-        byte[] end = { 0x1d, 0x4c, 0x1f, 0x00 };
-        mService.write(end);
-
-    }
-
-    public static byte[] draw2PxPoint(Bitmap bit) {
-        byte[] data = new byte[16290];
-        int k = 0;
-        for (int j = 0; j < 15; j++) {
-            data[k++] = 0x1B;
-            data[k++] = 0x2A;
-            data[k++] = 33; // m=33时，选择24点双密度打印，分辨率达到200DPI。
-            data[k++] = 0x68;
-            data[k++] = 0x01;
-            for (int i = 0; i < 360; i++) {
-                for (int m = 0; m < 3; m++) {
-                    for (int n = 0; n < 8; n++) {
-                        byte b = px2Byte(i, j * 24 + m * 8 + n, bit);
-                        data[k] += data[k] + b;
-                    }
-                    k++;
-                }
-            }
-            data[k++] = 10;
-        }
-        return data;
-    }
-
-    /**
-     * 图片二值化，黑色是1，白色是0
-     */
-    public static byte px2Byte(int x, int y, Bitmap bit) {
-        byte b;
-        int pixel = bit.getPixel(x, y);
-        int red = (pixel & 0x00ff0000) >> 16; // 取高两位
-        int green = (pixel & 0x0000ff00) >> 8; // 取中两位
-        int blue = pixel & 0x000000ff; // 取低两位
-        int gray = RGB2Gray(red, green, blue);
-        if ( gray < 128 ){
-            b = 1;
-        } else {
-            b = 0;
-        }
-        return b;
-    }
-
-    /**
-     * 图片灰度的转化
-     */
-    private static int RGB2Gray(int r, int g, int b){
-        int gray = (int) (0.29900 * r + 0.58700 * g + 0.11400 * b);  //灰度转化公式
-        return  gray;
-    }
-
-    /**
-     * 把一张Bitmap图片转化为打印机可以打印的bit
-     * @param bit
-     * @return
-     */
-    public static byte[] pic2PxPoint(Bitmap bit){
-        long start = System.currentTimeMillis();
-        byte[] data = new byte[16290];
-        int k = 0;
-        for (int i = 0; i < 15; i++) {
-            data[k++] = 0x1B;
-            data[k++] = 0x2A;
-            data[k++] = 33; // m=33时，选择24点双密度打印，分辨率达到200DPI。
-            data[k++] = 0x68;
-            data[k++] = 0x01;
-            for (int x = 0; x < 360; x++) {
-                for (int m = 0; m < 3; m++) {
-                    byte[]  by = new byte[8];
-                    for (int n = 0; n < 8; n++) {
-                        byte b = px2Byte(x, i * 24 + m * 8 +7-n, bit);
-                        by[n] = b;
-                    }
-                    data[k] = (byte) changePointPx1(by);
-                    k++;
-                }
-            }
-            data[k++] = 10;
-        }
-        long end = System.currentTimeMillis();
-        long str = end - start;
-        Log.i("TAG", "str:" + str);
-        return data;
-    }
-
-    /**
-     * 将[1,0,0,1,0,0,0,1]这样的二进制转为化十进制的数值（效率更高）
-     * @param arry
-     * @return
-     */
-    public static int changePointPx1(byte[] arry){
-        int v = 0;
-        for (int j = 0; j <arry.length; j++) {
-            if( arry[j] == 1) {
-                v = v | 1 << j;
-            }
-        }
-        return v;
-    }
-
-    private static final int BLACK = 0xff000000;
-
-    public static Bitmap createQRCode(String str, int widthAndHeight) throws WriterException {
-        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
-        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-        BitMatrix matrix = new MultiFormatWriter().encode(str,
-                BarcodeFormat.EAN_8, widthAndHeight, 80);
-        int width = matrix.getWidth();
-        int height = matrix.getHeight();
-        int[] pixels = new int[width * height];
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (matrix.get(x, y)) {
-                    pixels[y * width + x] = BLACK;
-                }
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bitmap;
-    }
-
-
-    /**
-     * 打印小票
-     */
-    private void printTicket() {
-        byte[] cmd = new byte[3];
-        cmd[0] = 0x1b;
-        cmd[1] = 0x21;
-
-        cmd[2] |= 0x10;   //倍高 倍宽模式
-        mService.write(cmd);
-        mService.sendMessage("快递宝\n","GBK");
-
-        cmd[2] &= 0xEF;
-        mService.write(cmd);
-        String msg = "运单号 :" + 8100012 +
-                "\n收件人 : " + "老唐" +
-                "\n收件人电话 : " + "18163215156" +
-                "\n收件地址 : " + "北京市丰台区天瑞大厦401\n" +
-                "\n网点 : " + "北京市丰台区纪家庙申通快递KKK部\n\n";
-        mService.sendMessage(msg, "GBK");
+    private String printRecStub() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(printUtil.drawBox(10, 10, 570, 340));
+        sb.append(printUtil.drawBox(10, 10, 500, 70));
+        sb.append(printUtil.drawBox(10, 70, 330, 180));
+        sb.append(printUtil.drawBox(10, 180, 330, 280));
+        sb.append(printUtil.drawLine(500, 10, 500, 340));
+        sb.append(printUtil.drawLine(330, 280, 330, 340));
+        sb.append(printUtil.drawLine(330, 230, 500, 230));
+        sb.append(printUtil.drawText(0, 1, 13, 73, "寄件方:"));
+        sb.append(printUtil.drawText(0, 1, 18, 108, "小瑞   13606237330"));
+        sb.append(printUtil.drawText(0, 1, 18, 143, "丰台区纪家庙天瑞大厦401"));
+        sb.append(printUtil.drawText(0, 1, 13, 183, "收件方:"));
+        sb.append(printUtil.drawText(0, 1, 18, 218, "宝宝   18330226823"));
+        sb.append(printUtil.drawText(0, 1, 18, 253, "朝阳区朝外SOHO A座1308"));
+        sb.append(printUtil.drawBarCode(1, 1, 50, 170, 15, "8100101"));
+        sb.append(printUtil.drawVText(0, 2, 530, 170, "收件人存根联"));
+        return sb.toString();
     }
 
     @Override

@@ -40,7 +40,7 @@
             android:padding="7dp"
             android:button="@null"
             android:onClick="blueTooth"
-            android:text="打印文字"/>
+            android:text="测试打印"/>
         <RadioButton
             android:id="@+id/bt_rb_print_ticket"
             android:layout_width="wrap_content"

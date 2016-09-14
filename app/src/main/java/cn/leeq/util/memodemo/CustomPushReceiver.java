@@ -19,7 +19,6 @@ import cn.leeq.util.memodemo.ui.IflyVoiceDemo;
  */
 public class CustomPushReceiver extends PushMessageReceiver {
 
-
     /**
      * 调用PushManager.startWork后，sdk将对push
      * server发起绑定请求，这个过程是异步的。绑定请求的结果通过onBind返回。 如果您需要用单播推送，需要把这里获取的channel
