@@ -55,7 +55,7 @@ public class PrintUtil {
     }
 
     public String drawPrint() {
-        return "PRINT";
+        return "PRINT\n";
     }
 
     private String getSpace() {
