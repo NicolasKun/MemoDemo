@@ -64,7 +64,11 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
@@ -158,11 +162,6 @@
             android:name=".ui.BlueToothDemo"
             android:label="蓝牙应用"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.SelectDevice"
