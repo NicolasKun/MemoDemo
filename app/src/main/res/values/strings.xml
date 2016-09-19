@@ -29,7 +29,7 @@
 
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
     <string name="ifly_voice_content">您有一个新订单啦\n收件地址在南美洲巴西联邦共和国伊比公园东门\n现在接单吗</string>
-    <string name="ifly_et_default">扁担长,板凳宽,扁担想绑在板凳上.\n板凳说:行.</string>
+    <string name="ifly_et_default">扁担长,板凳宽,扁担想绑在板凳上.\n板凳说:也行.</string>
     <!-- 保存到共享数据的值：0，1，2，3，4，5，6 -->
     <string-array name="feeds_list">
         <item>"0mm"</item>

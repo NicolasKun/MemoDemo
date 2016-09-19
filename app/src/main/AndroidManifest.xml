@@ -160,7 +160,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BlueToothDemo"
-            android:label="蓝牙应用"
             android:screenOrientation="portrait" >
         </activity>
         <activity
