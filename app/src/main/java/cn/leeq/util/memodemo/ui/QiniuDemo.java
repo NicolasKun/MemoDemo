@@ -82,12 +82,13 @@ public class QiniuDemo extends BaseActivity implements View.OnTouchListener, Vie
     private void initVoice() throws FileNotFoundException {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             mLocalRecorderPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    "/memo/voice/" + System.currentTimeMillis() / 1000 + ".amr";
-            mRecorderEngine = new RecorderEngine(new File(mLocalRecorderPath+"tmp"),this);
+                    "/memo/voice/" + System.currentTimeMillis() / 1000 + ".mp3";
+            mRecorderEngine = new RecorderEngine(new File(mLocalRecorderPath),this);
             mRecorderEngine.setInfoListener(this);
             mRecorderEngine.setRecordListener(this);
             mRecorderEngine.setRecordTimeListener(this);
         }
+
     }
 
     //语音录制
@@ -131,8 +132,10 @@ public class QiniuDemo extends BaseActivity implements View.OnTouchListener, Vie
                     break;
                 case 2:
                     File downResult = (File) msg.obj;
-                    Log.e("test", "下载成功 " + downResult.getAbsolutePath());
-                    mDownloadVoicePath = downResult.getAbsolutePath().substring(0, downResult.getAbsolutePath().lastIndexOf("r") + 1);
+                    String absolutePath = downResult.getAbsolutePath();
+
+                    Log.e("test", "下载成功 " + absolutePath);
+                    mDownloadVoicePath = absolutePath;
                     pbPlayAudio.setVisibility(View.GONE);
                     rbPlayAudio.setVisibility(View.VISIBLE);
                     break;
@@ -285,14 +288,9 @@ public class QiniuDemo extends BaseActivity implements View.OnTouchListener, Vie
             mediaPlayer.setDataSource(filePath);
             mediaPlayer.prepare();
             mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-
-                }
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

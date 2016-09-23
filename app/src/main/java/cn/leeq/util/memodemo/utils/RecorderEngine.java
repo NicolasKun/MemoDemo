@@ -3,12 +3,15 @@ package cn.leeq.util.memodemo.utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.OnInfoListener;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 
@@ -166,6 +169,7 @@ public class RecorderEngine {
     }
 
     /* 录音 */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void RecordStart() throws IllegalStateException, IOException,
             RuntimeException {
         if (listener != null) {
@@ -177,10 +181,10 @@ public class RecorderEngine {
         // channelConfig, audioFormat, bufferSizeInBytes)
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 声源
         // 设置音频文件的编码：AAC/AMR_NB/AMR_MB/Default
-        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
-        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 编码
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);// 编码
         mMediaRecorder.setAudioEncodingBitRate(16);// 比特率
-        // mMediaRecorder.setAudioSamplingRate(4000);// 采样率
+        mMediaRecorder.setAudioSamplingRate(48000);// 采样率
         mMediaRecorder.setAudioChannels(2);// 立体声
         mMediaRecorder.setOnInfoListener(mInfoListener);
         mMediaRecorder.setOutputFile(mRecordFile.getAbsolutePath());
