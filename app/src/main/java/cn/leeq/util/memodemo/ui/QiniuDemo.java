@@ -148,6 +148,7 @@ public class QiniuDemo extends BaseActivity implements View.OnTouchListener, Vie
     };
 
     private void downloadAndPlay() {
+        //Constants.DOMAIN + File.separator + mLocalKey
         RequestParams params = new RequestParams(Constants.DOMAIN + File.separator + mLocalKey);
         params.setAutoResume(true);
         params.setSaveFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/memo/download/" + mLocalKey.substring(0, mLocalKey.lastIndexOf(".") + 4));
