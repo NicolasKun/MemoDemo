@@ -43,6 +43,7 @@ public class RetrofitDemo extends BaseActivity {
                 .build();
     }
 
+    //没什么用
     private String test(String all) {
         if (all.equals("") && all.length() <= 0) {
             throw new NullPointerException("Do not found everything in \'all\'");

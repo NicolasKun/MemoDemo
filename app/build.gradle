@@ -25,9 +25,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    repositories {
-        maven { url "https://jitpack.io" }
-    }
+
     productFlavors {
     }
     sourceSets {
@@ -35,6 +33,10 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {

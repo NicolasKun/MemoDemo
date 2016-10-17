@@ -1,4 +1,4 @@
-package org.kuaidibao.courierkdb.utils;
+package cn.leeq.util.memodemo.utils;
 
 
 import android.support.v7.app.AppCompatActivity;
