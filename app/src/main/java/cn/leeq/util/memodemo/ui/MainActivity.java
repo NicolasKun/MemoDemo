@@ -117,6 +117,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 18:
                 startToActivity(IflyVoiceDemo.class);
                 break;
+            case 19:
+                startToActivity(DynamicInsert.class);
+                break;
         }
     }
 
