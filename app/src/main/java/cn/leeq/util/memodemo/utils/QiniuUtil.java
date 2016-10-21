@@ -36,6 +36,7 @@ public class QiniuUtil {
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
 
+    //不建议将key存在客户端
     private static String ACCESS_KEY = "UtgyE6G73-zS2cFmRFLA0shNQsf5H7bwbVEyVhVr";
     private static String SECRET_KEY = "qyhzdHqMGYTQ5Wj6Bq0BqaNNiTF5hqluE4tpP0iA";
 
