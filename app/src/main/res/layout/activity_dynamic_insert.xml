@@ -21,15 +21,5 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/color_grey_200" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <GridView
-            android:id="@+id/di_grid_view"
-            android:numColumns="4"
-            android:stretchMode="columnWidth"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+
 </LinearLayout>

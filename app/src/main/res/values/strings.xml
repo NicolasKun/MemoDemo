@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">综合SDK</string>
+    <string name="app_name">Memo</string>
 
     <string-array name="am_gv">
         <item>下拉刷新\n上拉加载</item>

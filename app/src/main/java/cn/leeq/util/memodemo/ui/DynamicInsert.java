@@ -1,5 +1,6 @@
 package cn.leeq.util.memodemo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,19 +17,21 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.leeq.util.memodemo.R;
+import cn.leeq.util.memodemo.adapter.DynamicAdapter;
 import cn.leeq.util.memodemo.adapter.GeneralAdapter;
 import cn.leeq.util.memodemo.adapter.ViewsHolder;
+import cn.leeq.util.memodemo.bean.DynamicBean;
 
-public class DynamicInsert extends BaseActivity implements AdapterView.OnItemClickListener {
+public class DynamicInsert extends BaseActivity implements AdapterView.OnItemClickListener, DynamicAdapter.OnClickDynamicItemListener {
     private static final String TAG = "DynamicInsert";
 
     @BindView(R.id.di_list_view)
     ListView diListView;
-    @BindView(R.id.di_grid_view)
-    GridView diGridView;
 
-    private List<String> lvData = new ArrayList<>();
-    private GeneralAdapter<String> lvAdapter;
+    private List<DynamicBean> lvData = new ArrayList<>();
+    private DynamicAdapter mListAdapter;
+    private int mPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,33 +42,42 @@ public class DynamicInsert extends BaseActivity implements AdapterView.OnItemCli
     }
 
     private void init() {
-        diListView.setAdapter(lvAdapter = new GeneralAdapter<String>(this, lvData, R.layout.item_dynamic_insert_list) {
-            @Override
-            public void convert(ViewsHolder holder, String item, int position) {
-                holder.setText(R.id.item_di_list_tv_content, item);
-            }
-        });
-
         View listBottomLayout = LayoutInflater.from(this).inflate(R.layout.bottom_layout_dynamic_insert, null);
         diListView.addFooterView(listBottomLayout);
+
+        mListAdapter = new DynamicAdapter(lvData, this, this);
+        diListView.setAdapter(mListAdapter);
 
         diListView.setOnItemClickListener(this);
     }
 
     private void loadData() {
-        for (int i = 1; i < 3; i++) {
-            lvData.add("不想再吃第 " + i + " 顿了...");
-        }
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e(TAG, "onItemClick: " + position);
         if (position == lvData.size()) {
-            lvData.add("不想吃   " + (lvData.size() + 1) + " 顿了...");
-            lvAdapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(this, position + " -- ", Toast.LENGTH_SHORT).show();
+            lvData.add(new DynamicBean());
+            mListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onScan(int position) {
+        mPosition = position;
+        startActivityForResult(new Intent(this, CaptureActivity.class), 200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 200) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("result");
+                lvData.get(mPosition).setContent(result);
+                mListAdapter.notifyDataSetChanged();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

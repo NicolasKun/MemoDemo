@@ -47,7 +47,6 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'org.xutils:xutils:3.3.36'
-    compile project(':multi-image-select')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile files('libs/zxing.jar')
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -57,4 +56,5 @@ dependencies {
     compile 'com.qiniu:qiniu-android-sdk:7.2.2'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
 }

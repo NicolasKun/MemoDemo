@@ -25,6 +25,7 @@ import cn.leeq.util.memodemo.R;
 import cn.leeq.util.memodemo.adapter.GeneralAdapter;
 import cn.leeq.util.memodemo.adapter.ViewsHolder;
 import cn.leeq.util.memodemo.widget.NoScorllGridView;
+import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 public class MultiImageSelect extends AppCompatActivity {
@@ -96,18 +97,17 @@ public class MultiImageSelect extends AppCompatActivity {
         }
     }
     private void startSelectImgs() {
-        Intent intent=new Intent(MultiImageSelect.this,MultiImageSelectorActivity.class);
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,true);
+        MultiImageSelector multiImageSelector = MultiImageSelector.create();
         if (selectNo == 0) {
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
+            multiImageSelector.single();
         } else if (selectNo == 1 && imgsNo > 0) {
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, imgsNo);
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+            multiImageSelector.multi()
+                    .count(imgsNo);
         }
         if (pathList != null && pathList.size() > 0) {
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST,pathList);
+            multiImageSelector.origin(pathList);
         }
-        startActivityForResult(intent, REQUEST_IMGS);
+        multiImageSelector.start(this, REQUEST_IMGS);
     }
 
     @Override
