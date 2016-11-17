@@ -42,12 +42,12 @@
 
     <permission
         android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.cn.leeq.util.memodemo"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal"/>
 
     <application
         android:name=".MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/memo_logo_plus"
+        android:icon="@mipmap/memo_logo_100"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
