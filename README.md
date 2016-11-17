@@ -37,3 +37,10 @@
 
 ###主页:
 <img width="300" height="500" src="images/device-2016-09-17-162340.png"></img>
+
+
+###Sample
+
+```
+http://fir.im/Memo
+```
