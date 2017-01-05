@@ -88,7 +88,6 @@ public class QiniuDemo extends BaseActivity implements View.OnTouchListener, Vie
             mRecorderEngine.setRecordListener(this);
             mRecorderEngine.setRecordTimeListener(this);
         }
-
     }
 
     //语音录制

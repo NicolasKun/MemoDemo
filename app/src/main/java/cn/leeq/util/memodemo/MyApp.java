@@ -66,7 +66,7 @@ public class MyApp extends Application {
                 .imageScaleType(ImageScaleType.IN_SAMPLE_INT)    //图片压缩格式 二次采样
                 .build();
 
-        File cacheDirectory = StorageUtils.getOwnCacheDirectory(this, "Electron/cache/image"); //缓存地址
+        File cacheDirectory = StorageUtils.getOwnCacheDirectory(this, "memo/cache/image"); //缓存地址
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .memoryCache(new LruMemoryCache(10 << 20))
                 .defaultDisplayImageOptions(build)    //使用
